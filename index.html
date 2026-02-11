@@ -15,10 +15,10 @@
             --vw-blue-accent: #339dff;
             --vw-blue-glow: #5cb8ff;
             --vw-blue-soft: #e8f0fe;
-            --black: #08090c;
-            --black-light: #0f1117;
-            --black-lighter: #161820;
-            --black-card: #1a1c26;
+            --black: #141620;
+            --black-light: #1a1d2a;
+            --black-lighter: #222535;
+            --black-card: #262a3a;
             --white: #ffffff;
             --gray: #e2e5f0;
             --gray-dark: #9499b3;
@@ -37,7 +37,7 @@
         .topbar-left { display: flex; gap: 1.5rem; align-items: center; }
         .topbar-right { display: flex; gap: 1rem; align-items: center; }
 
-        .navbar { position: sticky; top: 0; z-index: 1000; padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(8,9,12,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,30,80,0.3); transition: all 0.4s ease; }
+        .navbar { position: sticky; top: 0; z-index: 1000; padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(20,22,32,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,30,80,0.3); transition: all 0.4s ease; }
         .navbar.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.5); border-bottom-color: var(--vw-blue); }
         .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
         .logo-vw { width: 48px; height: 48px; border: 2px solid var(--vw-blue-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.7rem; color: var(--vw-blue-accent); letter-spacing: 1px; position: relative; }
@@ -58,7 +58,7 @@
         .menu-toggle span { width: 24px; height: 2px; background: var(--white); transition: 0.3s; border-radius: 2px; }
 
         .hero { position: relative; min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 4rem 5%; }
-        .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(0,102,204,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(0,30,80,0.2) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(0,67,122,0.08) 0%, transparent 70%); }
+        .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(51,157,255,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(0,30,80,0.25) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(0,67,122,0.1) 0%, transparent 70%); }
         .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(circle at center, black 30%, transparent 80%); }
         .hero-particles { position: absolute; inset: 0; overflow: hidden; }
         .particle { position: absolute; width: 3px; height: 3px; background: var(--vw-blue-accent); border-radius: 50%; opacity: 0; animation: float-up 8s infinite; }
@@ -83,7 +83,7 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,102,204,0.5); }
         .btn-wa { background: var(--green-wa); color: var(--white); box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
         .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.5); }
-        .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--gray-dark); }
+        .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.25); }
         .btn-outline:hover { border-color: var(--vw-blue-accent); background: rgba(0,102,204,0.1); }
 
         .section { padding: 5rem 5%; }
@@ -96,7 +96,7 @@
         .section-subtitle { font-size: 1rem; color: #dce0ed; max-width: 550px; margin: 0 auto; }
 
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
-        .plan-card { background: var(--black-card); border-radius: 16px; border: 1px solid rgba(0,102,204,0.1); overflow: hidden; transition: all 0.4s ease; position: relative; }
+        .plan-card { background: var(--black-card); border-radius: 16px; border: 1px solid rgba(0,102,204,0.18); overflow: hidden; transition: all 0.4s ease; position: relative; }
         .plan-card:hover { transform: translateY(-8px); border-color: rgba(0,102,204,0.4); box-shadow: 0 20px 50px rgba(0,102,204,0.15); }
         .plan-card-header { padding: 1.2rem 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-start; }
         .plan-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 0.3rem 0.8rem; border-radius: 50px; background: rgba(0,102,204,0.15); color: var(--vw-blue-glow); border: 1px solid rgba(0,102,204,0.2); }
@@ -141,7 +141,7 @@
         .plan-detail { display: flex; flex-direction: column; }
         .plan-detail-label { font-size: 0.65rem; color: #c8cde0; text-transform: uppercase; letter-spacing: 0.5px; }
         .plan-detail-value { font-size: 0.9rem; font-weight: 600; }
-        .plan-cuota-box { background: linear-gradient(135deg, rgba(0,102,204,0.1), rgba(0,30,80,0.15)); border: 1px solid rgba(0,102,204,0.2); border-radius: 12px; padding: 1rem; text-align: center; margin-bottom: 1rem; }
+        .plan-cuota-box { background: linear-gradient(135deg, rgba(51,157,255,0.12), rgba(0,30,80,0.2)); border: 1px solid rgba(51,157,255,0.25); border-radius: 12px; padding: 1rem; text-align: center; margin-bottom: 1rem; }
         .plan-cuota-label { font-size: 0.7rem; color: #c8cde0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
         .plan-cuota-value { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .plan-cuota-value small { font-size: 0.7rem; font-weight: 400; -webkit-text-fill-color: #c8cde0; }
@@ -156,9 +156,9 @@
 
         .benefits-section { background: var(--black-light); }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
-        .benefit-card { background: var(--black-card); border-radius: 16px; padding: 2rem; border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; text-align: center; }
+        .benefit-card { background: var(--black-card); border-radius: 16px; padding: 2rem; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; text-align: center; }
         .benefit-card:hover { border-color: rgba(0,102,204,0.3); transform: translateY(-4px); }
-        .benefit-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, rgba(0,102,204,0.15), rgba(0,30,80,0.1)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1.2rem; border: 1px solid rgba(0,102,204,0.2); }
+        .benefit-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, rgba(51,157,255,0.18), rgba(0,30,80,0.15)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1.2rem; border: 1px solid rgba(51,157,255,0.25); }
         .benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
         .benefit-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
 
@@ -169,7 +169,7 @@
         .step-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
 
         .faq-container { max-width: 750px; margin: 0 auto; }
-        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
         .faq-question { width: 100%; padding: 1.3rem 0; background: none; border: none; color: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s; }
         .faq-question:hover { color: var(--vw-blue-glow); }
         .faq-icon { font-size: 1.2rem; transition: transform 0.3s; color: var(--vw-blue-accent); }
@@ -190,7 +190,7 @@
 
         .sucursales-section { background: var(--black-light); }
         .sucursales-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto 2rem; }
-        .sucursal-card { background: var(--black-card); border-radius: 14px; border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; overflow: hidden; }
+        .sucursal-card { background: var(--black-card); border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; overflow: hidden; }
         .sucursal-card:hover { border-color: rgba(0,102,204,0.3); transform: translateY(-4px); }
         .sucursal-card-body { padding: 1.5rem; }
         .sucursal-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; }
@@ -204,13 +204,13 @@
         .sucursal-btn-map:hover { background: rgba(0,102,204,0.25); }
 
         .sucursales-maps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto; }
-        .map-container { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); background: var(--black-card); }
+        .map-container { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: var(--black-card); }
         .map-label { padding: 0.8rem 1rem 0.5rem; }
         .map-label h5 { font-size: 0.85rem; font-weight: 600; }
         .map-label p { font-size: 0.72rem; color: var(--gray); }
         .map-container iframe { width: 100%; height: 200px; border: none; }
 
-        .footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); padding: 3rem 5% 1.5rem; }
+        .footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.1); padding: 3rem 5% 1.5rem; }
         .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
         .footer-brand { max-width: 300px; }
         .footer-brand p { font-size: 0.78rem; color: var(--gray); margin-top: 0.8rem; line-height: 1.6; }
@@ -218,9 +218,9 @@
         .footer-links-group a { display: block; font-size: 0.78rem; color: var(--gray); text-decoration: none; margin-bottom: 0.4rem; transition: color 0.3s; }
         .footer-links-group a:hover { color: var(--vw-blue-accent); }
         .footer-social { display: flex; gap: 0.8rem; }
-        .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: var(--black-card); border: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--gray); text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: var(--black-card); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: #c0c5d8; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
         .footer-social a:hover { background: var(--vw-blue-accent); color: var(--white); border-color: var(--vw-blue-accent); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; }
         .footer-legal { font-size: 0.65rem; color: #9da2b8; line-height: 1.6; max-width: 900px; }
         .footer-copy { font-size: 0.72rem; color: var(--gray); margin-top: 1rem; }
 
@@ -231,7 +231,7 @@
 
         @media (max-width: 768px) {
             .topbar { display: none; }
-            .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8,9,12,0.98); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; z-index: 1001; }
+            .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20,22,32,0.98); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; z-index: 1001; }
             .nav-links.active { display: flex; }
             .menu-toggle { display: flex; z-index: 1002; }
             .hero { min-height: 75vh; }
