@@ -25,1024 +25,240 @@
             --green-wa: #25D366;
             --success: #00c853;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--black);
-            color: var(--white);
-            overflow-x: hidden;
-        }
-
+        body { font-family: 'Poppins', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--black); }
         ::-webkit-scrollbar-thumb { background: var(--vw-blue-accent); border-radius: 3px; }
 
-        /* ═══════════════ TOP BAR ═══════════════ */
-        .topbar {
-            background: var(--vw-blue);
-            padding: 0.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.8);
-        }
-        .topbar a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-        }
+        .topbar { background: var(--vw-blue); padding: 0.5rem 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(255,255,255,0.8); }
+        .topbar a { color: var(--white); text-decoration: none; font-weight: 500; }
         .topbar-left { display: flex; gap: 1.5rem; align-items: center; }
         .topbar-right { display: flex; gap: 1rem; align-items: center; }
-        .topbar-phone { display: flex; align-items: center; gap: 0.4rem; }
 
-        /* ═══════════════ NAVBAR ═══════════════ */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0.8rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(8,9,12,0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,30,80,0.3);
-            transition: all 0.4s ease;
-        }
-
-        .navbar.scrolled {
-            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-            border-bottom-color: var(--vw-blue);
-        }
-
+        .navbar { position: sticky; top: 0; z-index: 1000; padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(8,9,12,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,30,80,0.3); transition: all 0.4s ease; }
+        .navbar.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.5); border-bottom-color: var(--vw-blue); }
         .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
-        .logo-vw {
-            width: 48px;
-            height: 48px;
-            border: 2px solid var(--vw-blue-accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.7rem;
-            color: var(--vw-blue-accent);
-            letter-spacing: 1px;
-            position: relative;
-        }
-        .logo-vw::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            border: 1px solid rgba(0,102,204,0.3);
-        }
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-        .logo-alra {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--white);
-            letter-spacing: 3px;
-            line-height: 1;
-        }
-        .logo-planes {
-            font-size: 0.65rem;
-            font-weight: 400;
-            color: var(--vw-blue-accent);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
+        .logo-vw { width: 48px; height: 48px; border: 2px solid var(--vw-blue-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.7rem; color: var(--vw-blue-accent); letter-spacing: 1px; position: relative; }
+        .logo-vw::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid rgba(0,102,204,0.3); }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-alra { font-size: 1.4rem; font-weight: 800; color: var(--white); letter-spacing: 3px; line-height: 1; }
+        .logo-planes { font-size: 0.65rem; font-weight: 400; color: var(--vw-blue-accent); letter-spacing: 4px; text-transform: uppercase; }
 
         .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.82rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: color 0.3s; position: relative; }
         .nav-links a:hover { color: var(--white); }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--vw-blue-accent);
-            transition: width 0.3s;
-        }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--vw-blue-accent); transition: width 0.3s; }
         .nav-links a:hover::after { width: 100%; }
-
-        .nav-wa {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--green-wa);
-            color: var(--white) !important;
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.82rem !important;
-            font-weight: 600 !important;
-            transition: transform 0.3s, box-shadow 0.3s !important;
-        }
-        .nav-wa:hover {
-            transform: scale(1.05) !important;
-            box-shadow: 0 0 25px rgba(37,211,102,0.4) !important;
-        }
+        .nav-wa { display: flex; align-items: center; gap: 0.5rem; background: var(--green-wa); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.82rem !important; font-weight: 600 !important; transition: transform 0.3s, box-shadow 0.3s !important; }
+        .nav-wa:hover { transform: scale(1.05) !important; box-shadow: 0 0 25px rgba(37,211,102,0.4) !important; }
         .nav-wa::after { display: none !important; }
-
         .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
         .menu-toggle span { width: 24px; height: 2px; background: var(--white); transition: 0.3s; border-radius: 2px; }
 
-        /* ═══════════════ HERO ═══════════════ */
-        .hero {
-            position: relative;
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-            padding: 4rem 5%;
-        }
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(0,102,204,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 80%, rgba(0,30,80,0.2) 0%, transparent 60%),
-                radial-gradient(circle at 50% 50%, rgba(0,67,122,0.08) 0%, transparent 70%);
-        }
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-        }
-        .hero-particles {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-        }
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: var(--vw-blue-accent);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float-up 8s infinite;
-        }
-        @keyframes float-up {
-            0% { opacity: 0; transform: translateY(100vh) scale(0); }
-            20% { opacity: 0.6; }
-            80% { opacity: 0.3; }
-            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
-        }
-
+        .hero { position: relative; min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 4rem 5%; }
+        .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(0,102,204,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(0,30,80,0.2) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(0,67,122,0.08) 0%, transparent 70%); }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(circle at center, black 30%, transparent 80%); }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; }
+        .particle { position: absolute; width: 3px; height: 3px; background: var(--vw-blue-accent); border-radius: 50%; opacity: 0; animation: float-up 8s infinite; }
+        @keyframes float-up { 0% { opacity: 0; transform: translateY(100vh) scale(0); } 20% { opacity: 0.6; } 80% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-10vh) scale(1); } }
         .hero-content { position: relative; z-index: 2; max-width: 900px; }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(0,102,204,0.15);
-            border: 1px solid rgba(0,102,204,0.3);
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--vw-blue-glow);
-            margin-bottom: 2rem;
-            animation: fadeInDown 0.8s ease;
-        }
-        .hero-badge-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--vw-blue-glow);
-            border-radius: 50%;
-            animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,102,204,0.15); border: 1px solid rgba(0,102,204,0.3); padding: 0.4rem 1.2rem; border-radius: 50px; font-size: 0.75rem; font-weight: 500; color: var(--vw-blue-glow); margin-bottom: 2rem; animation: fadeInDown 0.8s ease; }
+        .hero-badge-dot { width: 6px; height: 6px; background: var(--vw-blue-glow); border-radius: 50%; animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem; animation: fadeInUp 1s ease; }
+        .hero h1 .accent { background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.1rem; color: var(--gray); max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; animation: fadeInUp 1.2s ease; }
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; animation: fadeInUp 1.4s ease; }
+        .hero-stat { text-align: center; }
+        .hero-stat-value { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-stat-label { font-size: 0.72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; }
+        .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1.6s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            line-height: 1.05;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-        .hero h1 .accent {
-            background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.7;
-            animation: fadeInUp 1.2s ease;
-        }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue)); color: var(--white); box-shadow: 0 4px 20px rgba(0,102,204,0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,102,204,0.5); }
+        .btn-wa { background: var(--green-wa); color: var(--white); box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
+        .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.5); }
+        .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--gray-dark); }
+        .btn-outline:hover { border-color: var(--vw-blue-accent); background: rgba(0,102,204,0.1); }
 
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            animation: fadeInUp 1.4s ease;
-        }
-        .hero-stat {
-            text-align: center;
-        }
-        .hero-stat-value {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-stat-label {
-            font-size: 0.72rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.2rem;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1.6s ease;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ═══════════════ BUTTONS ═══════════════ */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.85rem 2rem;
-            border-radius: 50px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue));
-            color: var(--white);
-            box-shadow: 0 4px 20px rgba(0,102,204,0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,102,204,0.5);
-        }
-        .btn-wa {
-            background: var(--green-wa);
-            color: var(--white);
-            box-shadow: 0 4px 20px rgba(37,211,102,0.3);
-        }
-        .btn-wa:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(37,211,102,0.5);
-        }
-        .btn-outline {
-            background: transparent;
-            color: var(--white);
-            border: 1px solid var(--gray-dark);
-        }
-        .btn-outline:hover {
-            border-color: var(--vw-blue-accent);
-            background: rgba(0,102,204,0.1);
-        }
-
-        /* ═══════════════ SECTION COMMON ═══════════════ */
-        .section {
-            padding: 5rem 5%;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-        .section-tag {
-            display: inline-block;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--vw-blue-accent);
-            margin-bottom: 1rem;
-            position: relative;
-            padding: 0 1rem;
-        }
-        .section-tag::before, .section-tag::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30px;
-            height: 1px;
-            background: var(--vw-blue-accent);
-            opacity: 0.5;
-        }
+        .section { padding: 5rem 5%; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--vw-blue-accent); margin-bottom: 1rem; position: relative; padding: 0 1rem; }
+        .section-tag::before, .section-tag::after { content: ''; position: absolute; top: 50%; width: 30px; height: 1px; background: var(--vw-blue-accent); opacity: 0.5; }
         .section-tag::before { right: 100%; }
         .section-tag::after { left: 100%; }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 0.8rem; }
+        .section-subtitle { font-size: 1rem; color: var(--gray); max-width: 550px; margin: 0 auto; }
 
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-        }
-        .section-subtitle {
-            font-size: 1rem;
-            color: var(--gray);
-            max-width: 550px;
-            margin: 0 auto;
-        }
-
-        /* ═══════════════ PLANS / CARDS ═══════════════ */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .plan-card {
-            background: var(--black-card);
-            border-radius: 16px;
-            border: 1px solid rgba(0,102,204,0.1);
-            overflow: hidden;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        .plan-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(0,102,204,0.4);
-            box-shadow: 0 20px 50px rgba(0,102,204,0.15);
-        }
-
-        .plan-card-header {
-            padding: 1.2rem 1.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .plan-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            background: rgba(0,102,204,0.15);
-            color: var(--vw-blue-glow);
-            border: 1px solid rgba(0,102,204,0.2);
-        }
-        .plan-type {
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 0.3rem 0.7rem;
-            border-radius: 50px;
-            letter-spacing: 1px;
-        }
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        .plan-card { background: var(--black-card); border-radius: 16px; border: 1px solid rgba(0,102,204,0.1); overflow: hidden; transition: all 0.4s ease; position: relative; }
+        .plan-card:hover { transform: translateY(-8px); border-color: rgba(0,102,204,0.4); box-shadow: 0 20px 50px rgba(0,102,204,0.15); }
+        .plan-card-header { padding: 1.2rem 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-start; }
+        .plan-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 0.3rem 0.8rem; border-radius: 50px; background: rgba(0,102,204,0.15); color: var(--vw-blue-glow); border: 1px solid rgba(0,102,204,0.2); }
+        .plan-type { font-size: 0.65rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 50px; letter-spacing: 1px; }
         .plan-type-70 { background: rgba(0,200,83,0.15); color: #00c853; }
         .plan-type-60 { background: rgba(255,171,0,0.15); color: #ffab00; }
         .plan-type-100 { background: rgba(0,102,204,0.2); color: var(--vw-blue-glow); }
+        .plan-card-img { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .plan-card-img img { max-width: 85%; max-height: 160px; object-fit: contain; transition: transform 0.5s ease; }
+        .plan-card:hover .plan-card-img img { transform: scale(1.08); }
+        .plan-card-img-placeholder { font-size: 4rem; opacity: 0.7; }
+        .plan-img-glow { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 70%; height: 30px; background: radial-gradient(ellipse, rgba(0,102,204,0.2), transparent); filter: blur(15px); }
+        .plan-card-img.has-gallery { cursor: pointer; }
+        .plan-card-img.has-gallery:hover img { transform: scale(1.08); filter: brightness(1.1); }
+        .photo-count { position: absolute; bottom: 10px; right: 12px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); color: #fff; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); pointer-events: none; }
 
-        .plan-card-img {
-            width: 100%;
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .plan-card-img img {
-            max-width: 85%;
-            max-height: 160px;
-            object-fit: contain;
-            transition: transform 0.5s ease;
-        }
-        .plan-card:hover .plan-card-img img {
-            transform: scale(1.08);
-        }
-        .plan-card-img-placeholder {
-            font-size: 4rem;
-            opacity: 0.7;
-        }
-        .plan-img-glow {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%;
-            height: 30px;
-            background: radial-gradient(ellipse, rgba(0,102,204,0.2), transparent);
-            filter: blur(15px);
-        }
-
-        .plan-card-body {
-            padding: 0 1.5rem 1.5rem;
-        }
-        .plan-model-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.15rem;
-        }
-        .plan-model-version {
-            font-size: 0.78rem;
-            color: var(--gray);
-            margin-bottom: 1rem;
-        }
-
-        .plan-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.6rem;
-            margin-bottom: 1.2rem;
-        }
-        .plan-detail {
-            display: flex;
-            flex-direction: column;
-        }
-        .plan-detail-label {
-            font-size: 0.65rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .plan-detail-value {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .plan-cuota-box {
-            background: linear-gradient(135deg, rgba(0,102,204,0.1), rgba(0,30,80,0.15));
-            border: 1px solid rgba(0,102,204,0.2);
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .plan-cuota-label {
-            font-size: 0.7rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.3rem;
-        }
-        .plan-cuota-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .plan-cuota-value small {
-            font-size: 0.7rem;
-            font-weight: 400;
-            -webkit-text-fill-color: var(--gray);
-        }
-
-        .plan-adjudicacion {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0;
-            font-size: 0.78rem;
-            color: var(--success);
-            margin-bottom: 1rem;
-        }
-        .plan-adjudicacion-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(0,200,83,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-        }
-
-        .plan-card-buttons {
-            display: flex;
-            gap: 0.6rem;
-        }
-        .plan-btn {
-            flex: 1;
-            padding: 0.7rem;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.78rem;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        .plan-btn-primary {
-            background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue));
-            color: var(--white);
-        }
+        /* Gallery Modal */
+        .gallery-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); backdrop-filter:blur(10px); }
+        .gallery-overlay.active { display:flex; align-items:center; justify-content:center; flex-direction:column; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .gallery-header { width:100%; max-width:900px; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+        .gallery-title { font-size:1.1rem; font-weight:700; }
+        .gallery-subtitle { font-size:0.78rem; color:var(--gray); }
+        .gallery-close { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+        .gallery-close:hover { background:rgba(255,255,255,0.2); }
+        .gallery-main { position:relative; width:100%; max-width:900px; aspect-ratio:16/9; max-height:65vh; display:flex; align-items:center; justify-content:center; }
+        .gallery-main img { max-width:90%; max-height:100%; object-fit:contain; border-radius:8px; transition: opacity 0.3s ease; }
+        .gallery-nav { position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.1); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+        .gallery-nav:hover { background:rgba(0,102,204,0.4); border-color:rgba(0,102,204,0.5); }
+        .gallery-prev { left:1rem; }
+        .gallery-next { right:1rem; }
+        .gallery-counter { padding:0.6rem; font-size:0.78rem; color:var(--gray); text-align:center; }
+        .gallery-thumbs { display:flex; gap:0.5rem; padding:0.5rem 1rem; max-width:900px; overflow-x:auto; }
+        .gallery-thumb { width:64px; height:48px; border-radius:6px; overflow:hidden; border:2px solid transparent; cursor:pointer; opacity:0.5; transition:all 0.2s; flex-shrink:0; }
+        .gallery-thumb.active { border-color:var(--vw-blue-accent); opacity:1; }
+        .gallery-thumb:hover { opacity:0.8; }
+        .gallery-thumb img { width:100%; height:100%; object-fit:cover; }
+        .plan-card-body { padding: 0 1.5rem 1.5rem; }
+        .plan-model-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.15rem; }
+        .plan-model-version { font-size: 0.78rem; color: var(--gray); margin-bottom: 1rem; }
+        .plan-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.2rem; }
+        .plan-detail { display: flex; flex-direction: column; }
+        .plan-detail-label { font-size: 0.65rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        .plan-detail-value { font-size: 0.9rem; font-weight: 600; }
+        .plan-cuota-box { background: linear-gradient(135deg, rgba(0,102,204,0.1), rgba(0,30,80,0.15)); border: 1px solid rgba(0,102,204,0.2); border-radius: 12px; padding: 1rem; text-align: center; margin-bottom: 1rem; }
+        .plan-cuota-label { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+        .plan-cuota-value { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .plan-cuota-value small { font-size: 0.7rem; font-weight: 400; -webkit-text-fill-color: var(--gray); }
+        .plan-adjudicacion { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; font-size: 0.78rem; color: var(--success); margin-bottom: 1rem; }
+        .plan-adjudicacion-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,200,83,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; }
+        .plan-card-buttons { display: flex; gap: 0.6rem; }
+        .plan-btn { flex: 1; padding: 0.7rem; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
+        .plan-btn-primary { background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue)); color: var(--white); }
         .plan-btn-primary:hover { box-shadow: 0 4px 15px rgba(0,102,204,0.4); }
-        .plan-btn-wa {
-            background: var(--green-wa);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-        }
+        .plan-btn-wa { background: var(--green-wa); color: var(--white); display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
         .plan-btn-wa:hover { box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
 
-        /* ═══════════════ BENEFITS ═══════════════ */
-        .benefits-section {
-            background: var(--black-light);
-        }
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .benefit-card {
-            background: var(--black-card);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255,255,255,0.04);
-            transition: all 0.3s;
-            text-align: center;
-        }
-        .benefit-card:hover {
-            border-color: rgba(0,102,204,0.3);
-            transform: translateY(-4px);
-        }
-        .benefit-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, rgba(0,102,204,0.15), rgba(0,30,80,0.1));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto 1.2rem;
-            border: 1px solid rgba(0,102,204,0.2);
-        }
-        .benefit-card h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .benefit-card p {
-            font-size: 0.82rem;
-            color: var(--gray);
-            line-height: 1.6;
-        }
+        .benefits-section { background: var(--black-light); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+        .benefit-card { background: var(--black-card); border-radius: 16px; padding: 2rem; border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; text-align: center; }
+        .benefit-card:hover { border-color: rgba(0,102,204,0.3); transform: translateY(-4px); }
+        .benefit-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, rgba(0,102,204,0.15), rgba(0,30,80,0.1)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1.2rem; border: 1px solid rgba(0,102,204,0.2); }
+        .benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .benefit-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
 
-        /* ═══════════════ HOW IT WORKS ═══════════════ */
-        .steps-container {
-            display: flex;
-            gap: 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .step-card {
-            flex: 1;
-            min-width: 220px;
-            max-width: 300px;
-            text-align: center;
-            position: relative;
-        }
-        .step-number {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin: 0 auto 1.2rem;
-        }
-        .step-card h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .step-card p {
-            font-size: 0.82rem;
-            color: var(--gray);
-            line-height: 1.6;
-        }
+        .steps-container { display: flex; gap: 2rem; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+        .step-card { flex: 1; min-width: 220px; max-width: 300px; text-align: center; position: relative; }
+        .step-number { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue)); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; margin: 0 auto 1.2rem; }
+        .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .step-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
 
-        /* ═══════════════ FAQ ═══════════════ */
-        .faq-container {
-            max-width: 750px;
-            margin: 0 auto;
-        }
-        .faq-item {
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .faq-question {
-            width: 100%;
-            padding: 1.3rem 0;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: color 0.3s;
-        }
+        .faq-container { max-width: 750px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .faq-question { width: 100%; padding: 1.3rem 0; background: none; border: none; color: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s; }
         .faq-question:hover { color: var(--vw-blue-glow); }
-        .faq-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s;
-            color: var(--vw-blue-accent);
-        }
+        .faq-icon { font-size: 1.2rem; transition: transform 0.3s; color: var(--vw-blue-accent); }
         .faq-item.active .faq-icon { transform: rotate(45deg); }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.3s;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            padding-bottom: 1.3rem;
-        }
-        .faq-answer p {
-            font-size: 0.85rem;
-            color: var(--gray);
-            line-height: 1.7;
-        }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+        .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 1.3rem; }
+        .faq-answer p { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
 
-        /* ═══════════════ CONTACT / CTA ═══════════════ */
-        .cta-section {
-            background: linear-gradient(135deg, var(--vw-blue) 0%, var(--vw-blue-light) 100%);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(0,0,0,0.2) 0%, transparent 50%);
-        }
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-        .cta-section h2 {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        .cta-section p {
-            font-size: 1rem;
-            opacity: 0.85;
-            margin-bottom: 2rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .cta-info {
-            display: flex;
-            gap: 2.5rem;
-            justify-content: center;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-        .cta-info-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-        .cta-info-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .cta-section { background: linear-gradient(135deg, var(--vw-blue) 0%, var(--vw-blue-light) 100%); text-align: center; position: relative; overflow: hidden; }
+        .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(0,0,0,0.2) 0%, transparent 50%); }
+        .cta-content { position: relative; z-index: 2; }
+        .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1rem; opacity: 0.85; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .cta-info { display: flex; gap: 2.5rem; justify-content: center; margin-top: 3rem; flex-wrap: wrap; }
+        .cta-info-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; opacity: 0.9; }
+        .cta-info-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; }
 
-        /* ═══════════════ FOOTER ═══════════════ */
-        .footer {
-            background: var(--black);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding: 3rem 5% 1.5rem;
-        }
-        .footer-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-        .footer-brand {
-            max-width: 300px;
-        }
-        .footer-brand p {
-            font-size: 0.78rem;
-            color: var(--gray);
-            margin-top: 0.8rem;
-            line-height: 1.6;
-        }
-        .footer-links-group h4 {
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            color: var(--white);
-        }
-        .footer-links-group a {
-            display: block;
-            font-size: 0.78rem;
-            color: var(--gray);
-            text-decoration: none;
-            margin-bottom: 0.4rem;
-            transition: color 0.3s;
-        }
-        .footer-links-group a:hover { color: var(--vw-blue-accent); }
-        .footer-social {
-            display: flex;
-            gap: 0.8rem;
-        }
-        .footer-social a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--black-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        .footer-social a:hover {
-            background: var(--vw-blue-accent);
-            color: var(--white);
-            border-color: var(--vw-blue-accent);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 1.5rem;
-        }
-        .footer-legal {
-            font-size: 0.65rem;
-            color: var(--gray-dark);
-            line-height: 1.6;
-            max-width: 900px;
-        }
-        .footer-copy {
-            font-size: 0.72rem;
-            color: var(--gray);
-            margin-top: 1rem;
-        }
-
-        /* ═══════════════ FLOATING WA ═══════════════ */
-        .wa-float {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 999;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--green-wa);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-            transition: transform 0.3s;
-            text-decoration: none;
-            font-size: 1.6rem;
-        }
-        .wa-float:hover { transform: scale(1.1); }
-        .wa-float::before {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 2px solid rgba(37,211,102,0.3);
-            animation: wa-pulse 2s infinite;
-        }
-        @keyframes wa-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.15); opacity: 0; }
-        }
-
-        /* ═══════════════ SUCURSALES ═══════════════ */
-        .sucursales-section {
-            background: var(--black-light);
-        }
-        .sucursales-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto 2.5rem;
-        }
-        .sucursal-card {
-            background: var(--black-card);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.04);
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        .sucursal-card:hover {
-            border-color: rgba(0,102,204,0.3);
-            transform: translateY(-4px);
-        }
-        .sucursal-card-body {
-            padding: 1.5rem;
-        }
-        .sucursal-card h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .sucursal-detail {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.6rem;
-            margin-bottom: 0.6rem;
-            font-size: 0.82rem;
-            color: var(--gray);
-        }
-        .sucursal-detail-icon {
-            font-size: 0.9rem;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-        .sucursal-buttons {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1.2rem;
-        }
-        .sucursal-btn {
-            flex: 1;
-            padding: 0.6rem;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        .sucursal-btn-wa {
-            background: var(--green-wa);
-            color: var(--white);
-        }
+        .sucursales-section { background: var(--black-light); }
+        .sucursales-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto 2rem; }
+        .sucursal-card { background: var(--black-card); border-radius: 14px; border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; overflow: hidden; }
+        .sucursal-card:hover { border-color: rgba(0,102,204,0.3); transform: translateY(-4px); }
+        .sucursal-card-body { padding: 1.5rem; }
+        .sucursal-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; }
+        .sucursal-detail { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--gray); margin-bottom: 0.5rem; }
+        .sucursal-detail-icon { font-size: 0.9rem; }
+        .sucursal-buttons { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
+        .sucursal-btn { flex: 1; padding: 0.6rem; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.3s; }
+        .sucursal-btn-wa { background: var(--green-wa); color: var(--white); }
         .sucursal-btn-wa:hover { box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
-        .sucursal-btn-map {
-            background: rgba(0,102,204,0.15);
-            color: var(--vw-blue-glow);
-            border: 1px solid rgba(0,102,204,0.2);
-        }
+        .sucursal-btn-map { background: rgba(0,102,204,0.15); color: var(--vw-blue-glow); border: 1px solid rgba(0,102,204,0.2); }
         .sucursal-btn-map:hover { background: rgba(0,102,204,0.25); }
 
-        .sucursales-maps {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .map-container {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-        .map-label {
-            background: var(--black-card);
-            padding: 1rem 1.2rem;
-        }
-        .map-label h5 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-        }
-        .map-label p {
-            font-size: 0.72rem;
-            color: var(--gray);
-        }
-        .map-container iframe {
-            width: 100%;
-            height: 250px;
-            border: none;
-            filter: grayscale(50%) invert(92%) contrast(83%);
-        }
+        .sucursales-maps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto; }
+        .map-container { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); background: var(--black-card); }
+        .map-label { padding: 0.8rem 1rem 0.5rem; }
+        .map-label h5 { font-size: 0.85rem; font-weight: 600; }
+        .map-label p { font-size: 0.72rem; color: var(--gray); }
+        .map-container iframe { width: 100%; height: 200px; border: none; }
 
-        /* ═══════════════ RESPONSIVE ═══════════════ */
+        .footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); padding: 3rem 5% 1.5rem; }
+        .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .footer-brand { max-width: 300px; }
+        .footer-brand p { font-size: 0.78rem; color: var(--gray); margin-top: 0.8rem; line-height: 1.6; }
+        .footer-links-group h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--white); }
+        .footer-links-group a { display: block; font-size: 0.78rem; color: var(--gray); text-decoration: none; margin-bottom: 0.4rem; transition: color 0.3s; }
+        .footer-links-group a:hover { color: var(--vw-blue-accent); }
+        .footer-social { display: flex; gap: 0.8rem; }
+        .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: var(--black-card); border: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--gray); text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .footer-social a:hover { background: var(--vw-blue-accent); color: var(--white); border-color: var(--vw-blue-accent); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; }
+        .footer-legal { font-size: 0.65rem; color: var(--gray-dark); line-height: 1.6; max-width: 900px; }
+        .footer-copy { font-size: 0.72rem; color: var(--gray); margin-top: 1rem; }
+
+        .wa-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; width: 60px; height: 60px; border-radius: 50%; background: var(--green-wa); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.3s; text-decoration: none; font-size: 1.6rem; }
+        .wa-float:hover { transform: scale(1.1); }
+        .wa-float::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(37,211,102,0.3); animation: wa-pulse 2s infinite; }
+        @keyframes wa-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0; } }
+
         @media (max-width: 768px) {
             .topbar { display: none; }
-            .nav-links { 
-                display: none; 
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(8,9,12,0.98);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                z-index: 1001;
-            }
+            .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8,9,12,0.98); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; z-index: 1001; }
             .nav-links.active { display: flex; }
             .menu-toggle { display: flex; z-index: 1002; }
-
             .hero { min-height: 75vh; }
             .hero-stats { gap: 1.5rem; }
             .hero-stat-value { font-size: 1.5rem; }
-
             .plans-grid { grid-template-columns: 1fr; max-width: 420px; }
             .benefits-grid { grid-template-columns: 1fr 1fr; }
             .steps-container { flex-direction: column; align-items: center; }
-            .sucursales-grid { grid-template-columns: 1fr 1fr; }
-            .sucursales-maps { grid-template-columns: 1fr; }
             .cta-info { flex-direction: column; align-items: center; gap: 1rem; }
             .footer-top { flex-direction: column; }
+            .sucursales-grid { grid-template-columns: 1fr 1fr; }
+            .sucursales-maps { grid-template-columns: 1fr; }
+            .gallery-main { max-height: 50vh; }
+            .gallery-nav { width:36px; height:36px; font-size:1rem; }
+            .gallery-prev { left:0.3rem; }
+            .gallery-next { right:0.3rem; }
+            .gallery-thumb { width:50px; height:38px; }
         }
-
         @media (max-width: 480px) {
             .benefits-grid { grid-template-columns: 1fr; }
-            .sucursales-grid { grid-template-columns: 1fr; }
             .hero-stats { flex-wrap: wrap; gap: 1rem; }
             .hero-ctas { flex-direction: column; align-items: center; }
+            .sucursales-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Top Bar -->
     <div class="topbar">
         <div class="topbar-left">
             <div class="topbar-phone">📞 <a href="tel:08101122572">0810-112-ALRA (2572)</a></div>
@@ -1050,17 +266,16 @@
         </div>
         <div class="topbar-right">
             <a href="https://www.alravw.com/sucursales/" target="_blank">📍 Sucursales</a>
-            <a href="https://web.whatsapp.com/send?phone=5491121655405&text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank">💬 Chat en vivo</a>
+            <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank">💬 Chat en vivo</a>
         </div>
     </div>
 
-    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#" class="logo">
-            <div class="logo-vw">VW</div>
+            <img src="https://res.cloudinary.com/daxkzdokg/image/upload/v1770771437/alra_vw_logo_pi5ldo.jpg" alt="ALRA" style="height:44px;border-radius:6px;">
             <div class="logo-text">
                 <span class="logo-alra">ALRA</span>
-                <span class="logo-planes">Planes</span>
+                <span class="logo-planes">Planes de Ahorro</span>
             </div>
         </a>
         <ul class="nav-links" id="navLinks">
@@ -1069,18 +284,13 @@
             <li><a href="#como-funciona">Cómo funciona</a></li>
             <li><a href="#faq">Preguntas</a></li>
             <li><a href="#sucursales">Sucursales</a></li>
-            <li>
-                <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank" class="nav-wa">
-                    💬 WhatsApp
-                </a>
-            </li>
+            <li><a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank" class="nav-wa">💬 WhatsApp</a></li>
         </ul>
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </button>
     </nav>
 
-    <!-- Hero -->
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
@@ -1096,30 +306,16 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="hero-badge-dot"></span>
-                Volkswagen · Concesionario Oficial
+                Autoahorro Volkswagen · Concesionario Oficial
             </div>
             <h1>Tu <span class="accent">Volkswagen 0km</span> en cuotas sin interés</h1>
             <p>Financiá tu Volkswagen 0km. Adjudicación asegurada desde cuota 2. Más de 42 años acompañándote.</p>
-            
             <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-value">0%</div>
-                    <div class="hero-stat-label">Interés</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">84</div>
-                    <div class="hero-stat-label">Cuotas</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">42+</div>
-                    <div class="hero-stat-label">Años</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">Cuota 2</div>
-                    <div class="hero-stat-label">Adj. Asegurada</div>
-                </div>
+                <div class="hero-stat"><div class="hero-stat-value">0%</div><div class="hero-stat-label">Interés</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">84</div><div class="hero-stat-label">Cuotas</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">100%</div><div class="hero-stat-label">Financiado</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">Cta 2</div><div class="hero-stat-label">Adjudicación</div></div>
             </div>
-
             <div class="hero-ctas">
                 <a href="#planes" class="btn btn-primary">Ver Planes Disponibles</a>
                 <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20VW" target="_blank" class="btn btn-wa">💬 Consultá por WhatsApp</a>
@@ -1127,29 +323,27 @@
         </div>
     </section>
 
-    <!-- Plans Section -->
     <section class="section" id="planes">
         <div class="section-header">
             <span class="section-tag">Planes Vigentes</span>
             <h2 class="section-title">Elegí tu Volkswagen</h2>
             <p class="section-subtitle">Todos los modelos con financiación oficial de fábrica. Sin sorpresas.</p>
         </div>
-
         <div class="plans-grid">
-            <!-- Tera 70/30 -->
+
             <div class="plan-card">
                 <div class="plan-card-header">
-                    <span class="plan-badge">Plan VW</span>
+                    <span class="plan-badge">Autoahorro VW</span>
                     <span class="plan-type plan-type-70">70/30</span>
                 </div>
-                <div class="plan-card-img">
+                <div class="plan-card-img" >
                     <img src="https://www.alravw.com/files/modelos/1756910362_outfit-blanco-3.png" alt="Volkswagen Tera">
                     <div class="plan-img-glow"></div>
+                    
                 </div>
                 <div class="plan-card-body">
                     <h3 class="plan-model-name">Volkswagen Tera</h3>
                     <p class="plan-model-version">Trend MSI MT · 84 cuotas</p>
-                    
                     <div class="plan-details">
                         <div class="plan-detail">
                             <span class="plan-detail-label">Valor 0km</span>
@@ -1160,38 +354,34 @@
                             <span class="plan-detail-value">70%</span>
                         </div>
                     </div>
-
                     <div class="plan-cuota-box">
                         <p class="plan-cuota-label">Cuota desde</p>
                         <p class="plan-cuota-value">$350.574 <small>/mes</small></p>
                     </div>
-
                     <div class="plan-adjudicacion">
                         <span class="plan-adjudicacion-icon">✓</span>
                         Adjudicación asegurada desde cuota 2
                     </div>
-
                     <div class="plan-card-buttons">
                         <a href="#contacto" class="plan-btn plan-btn-primary">Consultar</a>
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20Tera%2070/30" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20Tera%2070%2F30" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Nivus 70/30 -->
             <div class="plan-card">
                 <div class="plan-card-header">
-                    <span class="plan-badge">Plan VW</span>
+                    <span class="plan-badge">Autoahorro VW</span>
                     <span class="plan-type plan-type-70">70/30</span>
                 </div>
-                <div class="plan-card-img">
+                <div class="plan-card-img" >
                     <img src="https://www.alravw.com/files/modelos/1741627735_1741610523nivusmodelo.png" alt="Volkswagen Nivus">
                     <div class="plan-img-glow"></div>
+                    
                 </div>
                 <div class="plan-card-body">
                     <h3 class="plan-model-name">Volkswagen Nivus</h3>
                     <p class="plan-model-version">Trendline 200 TSI AT · 84 cuotas</p>
-                    
                     <div class="plan-details">
                         <div class="plan-detail">
                             <span class="plan-detail-label">Valor 0km</span>
@@ -1202,38 +392,34 @@
                             <span class="plan-detail-value">70%</span>
                         </div>
                     </div>
-
                     <div class="plan-cuota-box">
                         <p class="plan-cuota-label">Cuota desde</p>
                         <p class="plan-cuota-value">$440.971 <small>/mes</small></p>
                     </div>
-
                     <div class="plan-adjudicacion">
                         <span class="plan-adjudicacion-icon">✓</span>
                         Adjudicación asegurada desde cuota 2
                     </div>
-
                     <div class="plan-card-buttons">
                         <a href="#contacto" class="plan-btn plan-btn-primary">Consultar</a>
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20Nivus%2070/30" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20Nivus%2070%2F30" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
                     </div>
                 </div>
             </div>
 
-            <!-- T-Cross 70/30 -->
             <div class="plan-card">
                 <div class="plan-card-header">
-                    <span class="plan-badge">Plan VW</span>
+                    <span class="plan-badge">Autoahorro VW</span>
                     <span class="plan-type plan-type-70">70/30</span>
                 </div>
-                <div class="plan-card-img">
+                <div class="plan-card-img" >
                     <img src="https://www.alravw.com/files/modelos/1721403979_t-cross.png" alt="Volkswagen T-Cross">
                     <div class="plan-img-glow"></div>
+                    
                 </div>
                 <div class="plan-card-body">
                     <h3 class="plan-model-name">Volkswagen T-Cross</h3>
                     <p class="plan-model-version">Trendline 200 TSI AT · 84 cuotas</p>
-                    
                     <div class="plan-details">
                         <div class="plan-detail">
                             <span class="plan-detail-label">Valor 0km</span>
@@ -1244,38 +430,34 @@
                             <span class="plan-detail-value">70%</span>
                         </div>
                     </div>
-
                     <div class="plan-cuota-box">
                         <p class="plan-cuota-label">Cuota desde</p>
                         <p class="plan-cuota-value">$509.141 <small>/mes</small></p>
                     </div>
-
                     <div class="plan-adjudicacion">
                         <span class="plan-adjudicacion-icon">✓</span>
                         Adjudicación asegurada desde cuota 2
                     </div>
-
                     <div class="plan-card-buttons">
                         <a href="#contacto" class="plan-btn plan-btn-primary">Consultar</a>
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20T-Cross%2070/30" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20T-Cross%2070%2F30" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Taos 60/40 -->
             <div class="plan-card">
                 <div class="plan-card-header">
-                    <span class="plan-badge">Plan VW</span>
+                    <span class="plan-badge">Autoahorro VW</span>
                     <span class="plan-type plan-type-60">60/40</span>
                 </div>
-                <div class="plan-card-img">
+                <div class="plan-card-img" >
                     <img src="https://www.alravw.com/files/modelos/1766083345_taosmodelo2.png" alt="Volkswagen Taos">
                     <div class="plan-img-glow"></div>
+                    
                 </div>
                 <div class="plan-card-body">
                     <h3 class="plan-model-name">Volkswagen Taos</h3>
                     <p class="plan-model-version">Comfortline 250 TSI AT · 84 cuotas</p>
-                    
                     <div class="plan-details">
                         <div class="plan-detail">
                             <span class="plan-detail-label">Valor 0km</span>
@@ -1286,38 +468,34 @@
                             <span class="plan-detail-value">60%</span>
                         </div>
                     </div>
-
                     <div class="plan-cuota-box">
                         <p class="plan-cuota-label">Cuota desde</p>
                         <p class="plan-cuota-value">$502.003 <small>/mes</small></p>
                     </div>
-
                     <div class="plan-adjudicacion">
-                        <span class="plan-adjudicacion-icon">✅</span>
+                        <span class="plan-adjudicacion-icon">✓</span>
                         Adjudicación asegurada desde cuota 2
                     </div>
-
                     <div class="plan-card-buttons">
                         <a href="#contacto" class="plan-btn plan-btn-primary">Consultar</a>
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20Taos%2060/40" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20del%20Taos%2060%2F40" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Amarok 60/40 -->
             <div class="plan-card">
                 <div class="plan-card-header">
-                    <span class="plan-badge">Plan VW</span>
+                    <span class="plan-badge">Autoahorro VW</span>
                     <span class="plan-type plan-type-60">60/40</span>
                 </div>
-                <div class="plan-card-img">
+                <div class="plan-card-img" >
                     <img src="https://www.alravw.com/files/modelos/1724164206_amarok.png" alt="Volkswagen Amarok">
                     <div class="plan-img-glow"></div>
+                    
                 </div>
                 <div class="plan-card-body">
                     <h3 class="plan-model-name">Volkswagen Amarok</h3>
                     <p class="plan-model-version">Trendline 2.0 TDI 4x2 · 84 cuotas</p>
-                    
                     <div class="plan-details">
                         <div class="plan-detail">
                             <span class="plan-detail-label">Valor 0km</span>
@@ -1328,176 +506,92 @@
                             <span class="plan-detail-value">60%</span>
                         </div>
                     </div>
-
                     <div class="plan-cuota-box">
                         <p class="plan-cuota-label">Cuota desde</p>
                         <p class="plan-cuota-value">$508.493 <small>/mes</small></p>
                     </div>
-
                     <div class="plan-adjudicacion">
-                        <span class="plan-adjudicacion-icon">✅</span>
+                        <span class="plan-adjudicacion-icon">✓</span>
                         Adjudicación asegurada desde cuota 2
                     </div>
-
                     <div class="plan-card-buttons">
                         <a href="#contacto" class="plan-btn plan-btn-primary">Consultar</a>
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20de%20la%20Amarok%2060/40" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20el%20plan%20de%20la%20Amarok%2060%2F40" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </section>
 
-    <!-- Benefits -->
     <section class="section benefits-section" id="beneficios">
         <div class="section-header">
             <span class="section-tag">Beneficios Exclusivos</span>
             <h2 class="section-title">¿Por qué elegir ALRA?</h2>
             <p class="section-subtitle">El concesionario N°1 de Volkswagen te da más</p>
         </div>
-
         <div class="benefits-grid">
-            <div class="benefit-card">
-                <div class="benefit-icon">🎁</div>
-                <h3>6 Cuotas Bonificadas</h3>
-                <p>Promoción exclusiva para nuevos suscriptores. Consultá vigencia y condiciones.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">🚗</div>
-                <h3>Tomamos tu Usado</h3>
-                <p>Mejor cotización del mercado para tu usado como parte de pago del plan.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">⚡</div>
-                <h3>Adjudicación Asegurada</h3>
-                <p>Adjudicación asegurada desde la cuota 2. Tu Volkswagen 0km más cerca que nunca.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">💰</div>
-                <h3>Cuotas en Pesos</h3>
-                <p>Tus cuotas siempre en pesos. Se ajustan al valor del vehículo mes a mes.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">🛡️</div>
-                <h3>0% Interés</h3>
-                <p>Cuotas en pesos sin intereses bancarios. Solo pagás la alícuota del plan.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">🏆</div>
-                <h3>+42 Años de Confianza</h3>
-                <p>Concesionario oficial con la mejor reputación y servicio postventa de la red.</p>
-            </div>
+            <div class="benefit-card"><div class="benefit-icon">🎁</div><h3>6 Cuotas Bonificadas</h3><p>Promoción exclusiva para nuevos suscriptores. Consultá vigencia y condiciones.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🚗</div><h3>Tomamos tu Usado</h3><p>Mejor cotización del mercado para tu usado como parte de pago del plan.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">⚡</div><h3>Adjudicación Asegurada</h3><p>Adjudicación asegurada desde la cuota 2. Tu Volkswagen 0km más cerca que nunca.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">📋</div><h3>Sin Requisitos</h3><p>No necesitás recibo de sueldo, informe de Veraz ni garante para suscribir.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🛡️</div><h3>0% Interés</h3><p>Cuotas en pesos sin intereses bancarios. Solo pagás la alícuota del plan.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🏆</div><h3>+42 Años de Confianza</h3><p>Concesionario oficial con la mejor reputación y servicio postventa de la red.</p></div>
         </div>
     </section>
 
-    <!-- How it works -->
     <section class="section" id="como-funciona">
         <div class="section-header">
             <span class="section-tag">Paso a Paso</span>
             <h2 class="section-title">¿Cómo funciona?</h2>
             <p class="section-subtitle">Tu 0km en 4 simples pasos</p>
         </div>
-
         <div class="steps-container">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <h3>Elegí tu modelo</h3>
-                <p>Seleccioná el Volkswagen que más te guste y el plan que se adapte a tu bolsillo.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <h3>Suscribite</h3>
-                <p>Completá tus datos y elegí la forma de pago que más te convenga. Te asesoramos en todo el proceso.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <h3>Pagá tus cuotas</h3>
-                <p>Cuotas en pesos, sin interés. Ajustadas al valor del vehículo. Adjudicación asegurada desde cuota 2.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">4</div>
-                <h3>Retirá tu 0km</h3>
-                <p>Con la adjudicación asegurada desde cuota 2, completá el porcentaje restante y retirá tu Volkswagen 0km.</p>
-            </div>
+            <div class="step-card"><div class="step-number">1</div><h3>Elegí tu modelo</h3><p>Seleccioná el Volkswagen que más te guste y el plan que se adapte a tu bolsillo.</p></div>
+            <div class="step-card"><div class="step-number">2</div><h3>Suscribite</h3><p>Completá tus datos. Sin requisitos de ingreso, sin garante, sin recibo de sueldo.</p></div>
+            <div class="step-card"><div class="step-number">3</div><h3>Pagá tus cuotas</h3><p>Cuotas en pesos, sin interés. Adjudicación asegurada desde cuota 2.</p></div>
+            <div class="step-card"><div class="step-number">4</div><h3>Retirá tu 0km</h3><p>Con la adjudicación asegurada desde cuota 2, completá el porcentaje restante y retirá tu Volkswagen 0km.</p></div>
         </div>
     </section>
 
-    <!-- FAQ -->
     <section class="section" id="faq" style="background: var(--black-light);">
         <div class="section-header">
             <span class="section-tag">Preguntas Frecuentes</span>
             <h2 class="section-title">Todo lo que necesitás saber</h2>
         </div>
-
         <div class="faq-container">
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Cómo funciona el plan?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Es un sistema donde un grupo de personas aporta cuotas mensuales para adquirir un Volkswagen 0km. Contás con adjudicación asegurada desde la cuota 2, además de participar en sorteos y licitaciones mensuales.</p>
-                </div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Qué es un Plan de Ahorro?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Es un sistema donde un grupo de personas aporta cuotas mensuales para adquirir un Volkswagen 0km. Contás con adjudicación asegurada desde la cuota 2, además de participar en sorteos y licitaciones mensuales.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Qué diferencia hay entre plan 70/30 y 60/40?<span class="faq-icon">+</span></button><div class="faq-answer"><p>En un plan 70/30 se financia el 70% del valor del auto en cuotas y el 30% restante se abona al momento de la adjudicación. En el 60/40, se financia el 60% y se abona el 40% al adjudicar.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Necesito recibo de sueldo o garante?<span class="faq-icon">+</span></button><div class="faq-answer"><p>No. Para suscribirte solo necesitás tu DNI y completar la solicitud de adhesión. No se requiere recibo de sueldo, informe de Veraz ni garante.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Cómo me adjudican el auto?<span class="faq-icon">+</span></button><div class="faq-answer"><p>La adjudicación es asegurada desde la cuota 2. También participás automáticamente de sorteos mensuales y podés licitar ofreciendo un porcentaje del valor móvil para acelerar la entrega.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Puedo entregar mi auto usado?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Sí. En ALRA te ofrecemos la mejor cotización del mercado para tu usado como parte de pago del plan.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Puedo cambiar de modelo?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Sí, podés solicitar un cambio de modelo al momento de la adjudicación, por otro vehículo que comercialice Volkswagen, de acuerdo a las disponibilidades y abonando la diferencia si corresponde.</p></div></div>
+        </div>
+    </section>
+
+    <section class="section cta-section" id="contacto">
+        <div class="cta-content">
+            <h2>¿Listo para tu Volkswagen 0km?</h2>
+            <p>Nuestros asesores están disponibles para ayudarte a elegir el plan ideal.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank" class="btn btn-wa" style="background:#fff;color:#25D366;">💬 Escribinos por WhatsApp</a>
+                <a href="tel:08101122572" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);">📞 Llamanos: 0810-112-ALRA (2572)</a>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Qué diferencia hay entre plan 70/30 y 60/40?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>En un plan 70/30 se financia el 70% del valor del auto en cuotas y el 30% restante se abona al momento de la adjudicación. En el 60/40, se financia el 60% y se abona el 40% al adjudicar. Los planes 100% financian la totalidad del vehículo.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Puedo cambiar de modelo después de suscribirme?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Sí, podés solicitar un cambio de modelo al momento de la adjudicación, por otro vehículo que comercialice Volkswagen, de acuerdo a las disponibilidades y abonando la diferencia si corresponde.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Cómo me adjudican el auto?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>La adjudicación es asegurada desde la cuota 2. También participás automáticamente de sorteos mensuales y podés licitar ofreciendo un porcentaje del valor móvil para acelerar la entrega.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Puedo entregar mi auto usado?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Sí. En ALRA te ofrecemos la mejor cotización del mercado para tu usado como parte de pago del plan. Consultá con nuestros asesores para conocer el valor de tu vehículo.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Las cuotas tienen interés?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>No. El plan no cobra intereses bancarios. La cuota se compone de la alícuota (porción del valor del auto), cargos administrativos, seguro de vida y derecho de admisión, todo en pesos.</p>
-                </div>
+            <div class="cta-info">
+                <div class="cta-info-item"><div class="cta-info-icon">📍</div><span>Av. Gaona 4460 (C1407FIF)</span></div>
+                <div class="cta-info-item"><div class="cta-info-icon">🕐</div><span>Lunes a Viernes 9 a 18hs</span></div>
+                <div class="cta-info-item"><div class="cta-info-icon">📱</div><span>+54 9 11 2165-5405</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Sucursales -->
     <section class="section sucursales-section" id="sucursales">
         <div class="section-header">
             <span class="section-tag">Nuestras Sucursales</span>
             <h2 class="section-title">Visitanos</h2>
-            <p class="section-subtitle">4 ubicaciones en Ciudad de Buenos Aires para atenderte</p>
+            <p class="section-subtitle">Encontranos en nuestras sucursales de Buenos Aires</p>
         </div>
-
         <div class="sucursales-grid">
+
             <div class="sucursal-card">
                 <div class="sucursal-card-body">
                     <h3>📍 Floresta</h3>
@@ -1514,7 +608,7 @@
                         <span>Lun a Vie 9-19hs · Sáb 9-13hs</span>
                     </div>
                     <div class="sucursal-buttons">
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Consulto%20desde%20Sucursal%20Floresta" target="_blank" class="sucursal-btn sucursal-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Consulto%20desde%20Floresta" target="_blank" class="sucursal-btn sucursal-btn-wa">💬 WhatsApp</a>
                         <a href="https://maps.google.com/?q=Av.+Gaona+4460+Buenos+Aires" target="_blank" class="sucursal-btn sucursal-btn-map">📍 Cómo llegar</a>
                     </div>
                 </div>
@@ -1536,7 +630,7 @@
                         <span>Lun a Vie 9-19hs · Sáb 9-13hs</span>
                     </div>
                     <div class="sucursal-buttons">
-                        <a href="https://wa.me/5491121655405?text=Hola!%20Consulto%20desde%20Sucursal%20Liniers" target="_blank" class="sucursal-btn sucursal-btn-wa">💬 WhatsApp</a>
+                        <a href="https://wa.me/5491121655405?text=Hola!%20Consulto%20desde%20Liniers" target="_blank" class="sucursal-btn sucursal-btn-wa">💬 WhatsApp</a>
                         <a href="https://maps.google.com/?q=Av.+Juan+B.+Justo+9412+Buenos+Aires" target="_blank" class="sucursal-btn sucursal-btn-map">📍 Cómo llegar</a>
                     </div>
                 </div>
@@ -1564,67 +658,42 @@
                 </div>
             </div>
         </div>
-
         <div class="sucursales-maps">
+
             <div class="map-container">
                 <div class="map-label">
                     <h5>Floresta</h5>
-                    <p>Av. Gaona 4460, CABA</p>
+                    <p>Av. Gaona 4460 (C1407FIF)</p>
                 </div>
-                <iframe src="https://maps.google.com/maps?q=Av.+Gaona+4460,+Buenos+Aires,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Av.+Gaona+4460+Buenos+Aires,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
             </div>
+
             <div class="map-container">
                 <div class="map-label">
                     <h5>Liniers</h5>
-                    <p>Av. Juan B. Justo 9412, CABA</p>
+                    <p>Av. Juan B. Justo 9412 (C1408AKY)</p>
                 </div>
-                <iframe src="https://maps.google.com/maps?q=Av.+Juan+B.+Justo+9412,+Buenos+Aires,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Av.+Juan+B.+Justo+9412+Buenos+Aires,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
             </div>
+
             <div class="map-container">
                 <div class="map-label">
                     <h5>Alra Corrientes</h5>
                     <p>Av. Corrientes 5899, CABA</p>
                 </div>
-                <iframe src="https://maps.google.com/maps?q=Av.+Corrientes+5899,+Buenos+Aires,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Av.+Corrientes+5899+Buenos+Aires,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section cta-section" id="contacto">
-        <div class="cta-content">
-            <h2>¿Listo para tu Volkswagen 0km?</h2>
-            <p>Nuestros asesores están disponibles para ayudarte a elegir el plan ideal.</p>
-            <div class="cta-buttons">
-                <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank" class="btn btn-wa" style="background:#fff;color:#25D366;">💬 Escribinos por WhatsApp</a>
-                <a href="tel:08101122572" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);">📞 Llamanos: 0810-112-ALRA</a>
-            </div>
-            <div class="cta-info">
-                <div class="cta-info-item">
-                    <div class="cta-info-icon">📍</div>
-                    <span>Av. Corrientes 5899, CABA</span>
-                </div>
-                <div class="cta-info-item">
-                    <div class="cta-info-icon">🕐</div>
-                    <span>Lunes a Viernes 9 a 18hs</span>
-                </div>
-                <div class="cta-info-item">
-                    <div class="cta-info-icon">📱</div>
-                    <span>+54 9 11 2165-5405</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-brand">
                 <a href="#" class="logo" style="margin-bottom:0.5rem">
-                    <div class="logo-vw" style="width:40px;height:40px;font-size:0.6rem">VW</div>
+                    <img src="https://res.cloudinary.com/daxkzdokg/image/upload/v1770771437/alra_vw_logo_pi5ldo.jpg" alt="ALRA" style="height:36px;border-radius:4px;">
                     <div class="logo-text">
                         <span class="logo-alra" style="font-size:1.1rem">ALRA</span>
-                        <span class="logo-planes">Planes</span>
+                        <span class="logo-planes">Planes de Ahorro</span>
                     </div>
                 </a>
                 <p>Concesionario Oficial Volkswagen. Más de 42 años acompañándote en la compra de tu 0km.</p>
@@ -1633,7 +702,7 @@
                 <h4>Institucional</h4>
                 <a href="https://www.alravw.com" target="_blank">Sitio Oficial ALRA</a>
                 <a href="https://www.volkswagen.com.ar" target="_blank">Volkswagen Argentina</a>
-                <a href="https://www.autoahorro.com.ar" target="_blank">Planes VW</a>
+                <a href="https://www.autoahorro.com.ar" target="_blank">Autoahorro VW</a>
                 <a href="https://www.alravw.com/contacto/" target="_blank">Contacto</a>
             </div>
             <div class="footer-links-group">
@@ -1647,7 +716,7 @@
                 <div class="footer-social">
                     <a href="https://www.facebook.com/vwalra" target="_blank">f</a>
                     <a href="https://www.instagram.com/alravw/" target="_blank">ig</a>
-                    <a href="https://www.linkedin.com/company/alra-ventas-corporativas/" target="_blank">in</a>
+                    <a href="https://www.linkedin.com/company/alra-vw/" target="_blank">in</a>
                 </div>
             </div>
         </div>
@@ -1657,58 +726,101 @@
                 Plan de ahorro previo por grupo cerrado aprobado por Resoluciones Nros. 804/98 y 788/04 de la Inspección General de Justicia de la Nación. 
                 Los importes de las cuotas incluyen alícuota, cargos administrativos, seguro de vida, diferimiento y recupero de alícuota, impuestos y derecho de admisión. No incluyen impuesto de sellos, patentamiento, prenda ni seguro del bien.
                 Sede social administradora: Maipú 267 piso 11, CABA. 
-                El titular de los datos personales tiene la facultad de ejercer el derecho de acceso a los mismos conforme Ley Nº 25.326.
+                El titular de los datos personales tiene la facultad de ejercer el derecho de acceso a los mismos conforme Ley N° 25.326.
             </p>
-            <p class="footer-copy">© 2026 ALRA Planes · Concesionario Oficial Volkswagen · Av. Corrientes 5899, Buenos Aires</p>
+            <p class="footer-copy">© 2026 ALRA Planes · Concesionario Oficial Volkswagen · Av. Gaona 4460 (C1407FIF)</p>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp -->
     <a href="https://wa.me/5491121655405?text=Hola!%20Quiero%20info%20sobre%20planes%20de%20ahorro%20VW" target="_blank" class="wa-float">💬</a>
 
+    <!-- Gallery Modal -->
+    <div class="gallery-overlay" id="galleryOverlay">
+        <div class="gallery-header">
+            <div>
+                <div class="gallery-title" id="galleryTitle"></div>
+                <div class="gallery-subtitle" id="gallerySubtitle"></div>
+            </div>
+            <button class="gallery-close" onclick="closeGallery()">✕</button>
+        </div>
+        <div class="gallery-main">
+            <button class="gallery-nav gallery-prev" onclick="galleryNav(-1)">‹</button>
+            <img id="galleryImg" src="" alt="">
+            <button class="gallery-nav gallery-next" onclick="galleryNav(1)">›</button>
+        </div>
+        <div class="gallery-counter" id="galleryCounter"></div>
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
     <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        });
+        // Gallery data
+        const galleryData = [{"name":"Volkswagen Tera","version":"Trend MSI MT · 84 cuotas","images":["https://www.alravw.com/files/modelos/1756910362_outfit-blanco-3.png"]},{"name":"Volkswagen Nivus","version":"Trendline 200 TSI AT · 84 cuotas","images":["https://www.alravw.com/files/modelos/1741627735_1741610523nivusmodelo.png"]},{"name":"Volkswagen T-Cross","version":"Trendline 200 TSI AT · 84 cuotas","images":["https://www.alravw.com/files/modelos/1721403979_t-cross.png"]},{"name":"Volkswagen Taos","version":"Comfortline 250 TSI AT · 84 cuotas","images":["https://www.alravw.com/files/modelos/1766083345_taosmodelo2.png"]},{"name":"Volkswagen Amarok","version":"Trendline 2.0 TDI 4x2 · 84 cuotas","images":["https://www.alravw.com/files/modelos/1724164206_amarok.png"]}];
+        let currentModel = 0;
+        let currentPhoto = 0;
 
-        // Mobile menu
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
+        function openGallery(modelIdx) {
+            currentModel = modelIdx;
+            currentPhoto = 0;
+            const m = galleryData[modelIdx];
+            if (!m || !m.images.length) return;
+            document.getElementById('galleryTitle').textContent = m.name;
+            document.getElementById('gallerySubtitle').textContent = m.version;
+            updateGalleryPhoto();
+            renderThumbs();
+            document.getElementById('galleryOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        // Close menu on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-
-        // FAQ toggle
-        function toggleFaq(btn) {
-            const item = btn.parentElement;
-            const wasActive = item.classList.contains('active');
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-            if (!wasActive) item.classList.add('active');
+        function closeGallery() {
+            document.getElementById('galleryOverlay').classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        // Intersection Observer for animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+        function galleryNav(dir) {
+            const m = galleryData[currentModel];
+            currentPhoto = (currentPhoto + dir + m.images.length) % m.images.length;
+            updateGalleryPhoto();
+            updateActiveThumbs();
+        }
 
-        document.querySelectorAll('.plan-card, .benefit-card, .step-card, .sucursal-card, .map-container').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
+        function goToPhoto(idx) {
+            currentPhoto = idx;
+            updateGalleryPhoto();
+            updateActiveThumbs();
+        }
+
+        function updateGalleryPhoto() {
+            const m = galleryData[currentModel];
+            const img = document.getElementById('galleryImg');
+            img.style.opacity = '0';
+            setTimeout(() => { img.src = m.images[currentPhoto]; img.style.opacity = '1'; }, 150);
+            document.getElementById('galleryCounter').textContent = (currentPhoto + 1) + ' / ' + m.images.length;
+        }
+
+        function renderThumbs() {
+            const m = galleryData[currentModel];
+            document.getElementById('galleryThumbs').innerHTML = m.images.map((src, i) =>
+                '<div class="gallery-thumb ' + (i === 0 ? 'active' : '') + '" onclick="goToPhoto(' + i + ')"><img src="' + src + '"></div>'
+            ).join('');
+        }
+
+        function updateActiveThumbs() {
+            document.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === currentPhoto);
+            });
+        }
+
+        // Close on ESC / overlay click
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGallery(); if (e.key === 'ArrowRight') galleryNav(1); if (e.key === 'ArrowLeft') galleryNav(-1); });
+        document.getElementById('galleryOverlay').addEventListener('click', e => { if (e.target.id === 'galleryOverlay') closeGallery(); });
+
+        // Rest of landing JS
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('active'); }); });
+        function toggleFaq(btn) { const item = btn.parentElement; const wasActive = item.classList.contains('active'); document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active')); if (!wasActive) item.classList.add('active'); }
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.plan-card, .benefit-card, .step-card, .sucursal-card, .map-container').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'opacity 0.6s ease, transform 0.6s ease'; observer.observe(el); });
     </script>
 </body>
 </html>
