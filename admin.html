@@ -303,35 +303,35 @@
 const defaultModels = [
     {
         id: 1, name: "Volkswagen Tera", version: "Trend MSI MT · 84 cuotas",
-        planType: "70/30", financiado: "70%", price: "36.755.250", cuota: "350.574",
+        planType: "70/30", anticipo: "30%", price: "36.755.250", cuota: "350.574",
         adjudicacion: "Adjudicación asegurada desde cuota 2",
         images: ["https://www.alravw.com/files/modelos/1756910362_outfit-blanco-3.png"],
         waText: "Hola! Quiero info sobre el plan del Tera 70/30"
     },
     {
         id: 2, name: "Volkswagen Nivus", version: "Trendline 200 TSI AT · 84 cuotas",
-        planType: "70/30", financiado: "70%", price: "46.232.750", cuota: "440.971",
+        planType: "70/30", anticipo: "30%", price: "46.232.750", cuota: "440.971",
         adjudicacion: "Adjudicación asegurada desde cuota 2",
         images: ["https://www.alravw.com/files/modelos/1741627735_1741610523nivusmodelo.png"],
         waText: "Hola! Quiero info sobre el plan del Nivus 70/30"
     },
     {
         id: 3, name: "Volkswagen T-Cross", version: "Trendline 200 TSI AT · 84 cuotas",
-        planType: "70/30", financiado: "70%", price: "53.379.850", cuota: "509.141",
+        planType: "70/30", anticipo: "30%", price: "53.379.850", cuota: "509.141",
         adjudicacion: "Adjudicación asegurada desde cuota 2",
         images: ["https://www.alravw.com/files/modelos/1721403979_t-cross.png"],
         waText: "Hola! Quiero info sobre el plan del T-Cross 70/30"
     },
     {
         id: 4, name: "Volkswagen Taos", version: "Comfortline 250 TSI AT · 84 cuotas",
-        planType: "60/40", financiado: "60%", price: "57.511.950", cuota: "502.003",
+        planType: "60/40", anticipo: "40%", price: "57.511.950", cuota: "502.003",
         adjudicacion: "Adjudicación asegurada desde cuota 2",
         images: ["https://www.alravw.com/files/modelos/1766083345_taosmodelo2.png"],
         waText: "Hola! Quiero info sobre el plan del Taos 60/40"
     },
     {
         id: 5, name: "Volkswagen Amarok", version: "Trendline 2.0 TDI 4x2 · 84 cuotas",
-        planType: "60/40", financiado: "60%", price: "58.255.550", cuota: "508.493",
+        planType: "60/40", anticipo: "40%", price: "58.255.550", cuota: "508.493",
         adjudicacion: "Adjudicación asegurada desde cuota 2",
         images: ["https://www.alravw.com/files/modelos/1724164206_amarok.png"],
         waText: "Hola! Quiero info sobre el plan de la Amarok 60/40"
@@ -356,10 +356,16 @@ function init() {
     if (saved) {
         const cfg = JSON.parse(saved);
         models = cfg.models || defaultModels;
-        // Migrate old imgUrl to images array
+        // Migrate old imgUrl to images array + financiado to anticipo
         models.forEach(m => {
             if (!m.images) m.images = m.imgUrl ? [m.imgUrl] : [];
             delete m.imgUrl;
+            if (m.financiado && !m.anticipo) {
+                const pct = parseInt(m.financiado);
+                m.anticipo = pct ? (100 - pct) + '%' : '30%';
+                delete m.financiado;
+            }
+            if (!m.anticipo) m.anticipo = m.planType === '60/40' ? '40%' : '30%';
         });
         sucursales = cfg.sucursales || defaultSucursales;
         if (cfg.config) {
@@ -435,8 +441,8 @@ function renderModels() {
                     <input type="text" value="${m.cuota}" onchange="updateModel(${m.id},'cuota',this.value)">
                 </div>
                 <div class="form-group">
-                    <label>% Financiado</label>
-                    <input type="text" value="${m.financiado}" onchange="updateModel(${m.id},'financiado',this.value)">
+                    <label>% Anticipo</label>
+                    <input type="text" value="${m.anticipo}" onchange="updateModel(${m.id},'anticipo',this.value)">
                 </div>
                 <div class="form-group" style="grid-column:span 2;">
                     <label>Texto Adjudicación</label>
@@ -506,7 +512,7 @@ function updateModel(id, field, value) {
     if (m) {
         m[field] = value;
         if (field === 'planType') {
-            m.financiado = value === '70/30' ? '70%' : value === '60/40' ? '60%' : '100%';
+            m.anticipo = value === '70/30' ? '30%' : value === '60/40' ? '40%' : '0%';
         }
         if (field === 'name' || field === 'planType') renderModels();
     }
@@ -517,7 +523,7 @@ function addModel() {
         id: nextModelId++,
         name: "Volkswagen Nuevo Modelo",
         version: "Versión · 84 cuotas",
-        planType: "70/30", financiado: "70%",
+        planType: "70/30", anticipo: "30%",
         price: "0", cuota: "0",
         adjudicacion: "Adjudicación asegurada desde cuota 2",
         images: [],
@@ -670,8 +676,8 @@ function generateLandingHTML() {
                             <span class="plan-detail-value">$${m.price}</span>
                         </div>
                         <div class="plan-detail">
-                            <span class="plan-detail-label">Financiado</span>
-                            <span class="plan-detail-value">${m.financiado}</span>
+                            <span class="plan-detail-label">Anticipo</span>
+                            <span class="plan-detail-value">${m.anticipo}</span>
                         </div>
                     </div>
                     <div class="plan-cuota-box">
