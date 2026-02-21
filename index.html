@@ -2152,8 +2152,19 @@
                         La reserva corresponde al pago de la <strong>Cuota 1 (Super Promo)</strong>. Una vez acreditado el pago, tu plan queda confirmado y un asesor se pone en contacto para coordinar los próximos pasos.
                     </div>
                     <div class="reserve-cuota">
-                        <div class="reserve-cuota-label">Valor de reserva (Cuota 1)</div>
+                        <div class="reserve-cuota-label">Cuota 1</div>
+                        <div class="reserve-cuota-amount" id="reserveBase" style="font-size:1rem;opacity:0.7;"></div>
+                    </div>
+                    <div class="reserve-cuota" style="margin-top:6px;">
+                        <div class="reserve-cuota-label">Gastos de gestión y procesamiento de pago (5%)</div>
+                        <div class="reserve-cuota-amount" id="reserveComision" style="font-size:0.95rem;opacity:0.6;"></div>
+                    </div>
+                    <div class="reserve-cuota" style="margin-top:8px; padding-top:10px; border-top:1px solid var(--black-border);">
+                        <div class="reserve-cuota-label" style="font-weight:700; color:var(--white);">Total a pagar</div>
                         <div class="reserve-cuota-amount" id="reserveAmount"></div>
+                    </div>
+                    <div style="font-size:0.72rem; color:var(--gray); margin-top:8px; line-height:1.4; text-align:center;">
+                        * El 5% adicional cubre los gastos de gestión administrativa y procesamiento del pago online.
                     </div>
                     <div class="reserve-methods">
                         <div class="reserve-method">
@@ -2170,6 +2181,7 @@
                                 <strong>Razón Social:</strong> ALRA SA
                             </div>
                             <button class="reserve-copy-btn" onclick="copyToClipboard('0170470320000000175287', this)"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="vertical-align:middle;margin-right:3px;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Copiar CBU</button>
+                            <div style="font-size:0.72rem; color:var(--green-accent); margin-top:8px;">✓ Por transferencia bancaria no se cobra el 5% de gestión.</div>
                         </div>
                         <div class="reserve-method">
                             <div class="reserve-method-icon">
@@ -2425,7 +2437,11 @@ function openModal(vehicle) {
     // Show reserve button for 0km with cuota 1 data
     const cuota1 = findCuota1(vehicle);
     if (cuota1) {
-        document.getElementById('reserveAmount').textContent = formatCurrency(cuota1);
+        const comision = Math.round(cuota1 * 0.05);
+        const total = cuota1 + comision;
+        document.getElementById('reserveBase').textContent = formatCurrency(cuota1);
+        document.getElementById('reserveComision').textContent = '+' + formatCurrency(comision);
+        document.getElementById('reserveAmount').textContent = formatCurrency(total);
         document.getElementById('modalReserveBtn').style.display = 'block';
     }
 
