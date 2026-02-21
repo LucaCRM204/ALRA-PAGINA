@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALRA Planes · Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f1117;
+            --bg-card: #1a1c26;
+            --bg-input: #12141c;
+            --border: #2a2d3a;
+            --border-focus: #0066CC;
+            --blue: #0066CC;
+            --blue-light: #1a8cff;
+            --green: #00c853;
+            --red: #ff4444;
+            --orange: #ff9800;
+            --white: #ffffff;
+            --gray: #8a8fa3;
+            --gray-light: #c0c4d6;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--white); min-height:100vh; }
+
+        /* Header */
+        .admin-header {
+            background: linear-gradient(135deg, #001E50, #00437A);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .admin-header h1 { font-size:1.2rem; font-weight:700; display:flex; align-items:center; gap:0.6rem; }
+        .admin-header h1 span { font-weight:400; color:rgba(255,255,255,0.6); font-size:0.85rem; }
+        .header-actions { display:flex; gap:0.8rem; }
+
+        /* Buttons */
+        .btn {
+            display:inline-flex; align-items:center; gap:0.5rem;
+            padding:0.6rem 1.2rem; border-radius:8px;
+            font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
+            border:none; cursor:pointer; transition:all 0.2s;
+        }
+        .btn-primary { background:var(--blue); color:#fff; }
+        .btn-primary:hover { background:var(--blue-light); transform:translateY(-1px); }
+        .btn-success { background:var(--green); color:#fff; }
+        .btn-success:hover { opacity:0.9; transform:translateY(-1px); }
+        .btn-danger { background:var(--red); color:#fff; }
+        .btn-danger:hover { opacity:0.9; }
+        .btn-outline { background:transparent; color:var(--gray-light); border:1px solid var(--border); }
+        .btn-outline:hover { border-color:var(--blue); color:var(--white); }
+        .btn-sm { padding:0.4rem 0.8rem; font-size:0.75rem; }
+
+        /* Layout */
+        .admin-container { max-width:1200px; margin:0 auto; padding:2rem; }
+
+        /* Tabs */
+        .tabs { display:flex; gap:0.5rem; margin-bottom:2rem; border-bottom:1px solid var(--border); padding-bottom:0; }
+        .tab {
+            padding:0.8rem 1.5rem; font-size:0.85rem; font-weight:600; color:var(--gray);
+            border:none; background:none; cursor:pointer; border-bottom:2px solid transparent;
+            transition:all 0.2s; font-family:'Inter',sans-serif;
+        }
+        .tab:hover { color:var(--white); }
+        .tab.active { color:var(--blue-light); border-bottom-color:var(--blue); }
+
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+
+        /* Section */
+        .section-title { font-size:1.1rem; font-weight:700; margin-bottom:1.5rem; display:flex; align-items:center; gap:0.5rem; }
+        .section-title .count { background:var(--blue); color:#fff; padding:0.15rem 0.6rem; border-radius:12px; font-size:0.7rem; }
+
+        /* Model Card */
+        .model-card {
+            background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+            padding:1.5rem; margin-bottom:1.2rem; transition:border-color 0.2s;
+        }
+        .model-card:hover { border-color:rgba(0,102,204,0.3); }
+        .model-card-header {
+            display:flex; justify-content:space-between; align-items:center;
+            margin-bottom:1.2rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border);
+        }
+        .model-card-title { font-size:1rem; font-weight:700; }
+        .model-card-badge {
+            font-size:0.7rem; font-weight:600; padding:0.25rem 0.7rem;
+            border-radius:20px; text-transform:uppercase; letter-spacing:0.5px;
+        }
+        .badge-70 { background:rgba(0,200,83,0.15); color:#00c853; }
+        .badge-60 { background:rgba(255,171,0,0.15); color:#ffab00; }
+        .badge-100 { background:rgba(0,102,204,0.2); color:var(--blue-light); }
+
+        /* Form grid */
+        .form-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+        .form-grid-2 { grid-template-columns:1fr 1fr; }
+        .form-grid-full { grid-template-columns:1fr; }
+        .form-group { display:flex; flex-direction:column; gap:0.3rem; }
+        .form-group label {
+            font-size:0.7rem; font-weight:600; color:var(--gray);
+            text-transform:uppercase; letter-spacing:0.5px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            background:var(--bg-input); border:1px solid var(--border); border-radius:8px;
+            padding:0.6rem 0.8rem; color:var(--white); font-family:'Inter',sans-serif;
+            font-size:0.85rem; transition:border-color 0.2s; outline:none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color:var(--border-focus);
+        }
+        .form-group textarea { resize:vertical; min-height:60px; }
+        .form-group select { cursor:pointer; }
+        .form-group select option { background:var(--bg-card); }
+
+        .img-preview {
+            width:100%; height:120px; background:var(--bg-input); border:1px solid var(--border);
+            border-radius:8px; display:flex; align-items:center; justify-content:center;
+            overflow:hidden; margin-top:0.5rem;
+        }
+        .img-preview img { max-width:90%; max-height:100px; object-fit:contain; }
+        .img-preview .placeholder { color:var(--gray); font-size:0.8rem; }
+
+        .images-grid {
+            display:grid; grid-template-columns:repeat(5, 1fr); gap:0.6rem; margin-top:0.8rem;
+        }
+        .img-slot {
+            aspect-ratio:4/3; background:var(--bg-input); border:1px dashed var(--border);
+            border-radius:8px; display:flex; align-items:center; justify-content:center;
+            overflow:hidden; position:relative; cursor:pointer; transition:border-color 0.2s;
+        }
+        .img-slot:hover { border-color:var(--blue); }
+        .img-slot img { width:100%; height:100%; object-fit:cover; }
+        .img-slot .slot-num {
+            position:absolute; top:4px; left:6px; font-size:0.6rem; font-weight:700;
+            color:var(--gray); background:rgba(0,0,0,0.5); padding:1px 5px; border-radius:4px;
+        }
+        .img-slot .slot-remove {
+            position:absolute; top:3px; right:5px; width:18px; height:18px; border-radius:50%;
+            background:var(--red); color:#fff; border:none; cursor:pointer; font-size:0.65rem;
+            display:none; align-items:center; justify-content:center; line-height:1;
+        }
+        .img-slot:hover .slot-remove { display:flex; }
+        .img-slot .slot-empty { color:var(--gray); font-size:0.7rem; text-align:center; }
+        .img-slot.primary { border-color:var(--blue); border-style:solid; }
+        .img-slot.primary .slot-num { background:var(--blue); color:#fff; }
+        .img-url-input {
+            width:100%; background:var(--bg-input); border:1px solid var(--border); border-radius:6px;
+            padding:0.4rem 0.6rem; color:var(--white); font-family:'Inter',sans-serif; font-size:0.75rem;
+            outline:none; margin-top:0.4rem;
+        }
+        .img-url-input:focus { border-color:var(--blue); }
+        .img-counter { font-size:0.72rem; color:var(--gray); margin-top:0.4rem; }
+
+        .card-actions { display:flex; gap:0.5rem; margin-top:1rem; justify-content:flex-end; }
+
+        /* Config section */
+        .config-card {
+            background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+            padding:1.5rem; margin-bottom:1.5rem;
+        }
+        .config-card h3 { font-size:0.95rem; font-weight:700; margin-bottom:1rem; }
+
+        /* Logo preview */
+        .logo-preview {
+            width:200px; height:80px; background:var(--bg-input); border:1px solid var(--border);
+            border-radius:8px; display:flex; align-items:center; justify-content:center;
+            overflow:hidden; margin-top:0.5rem;
+        }
+        .logo-preview img { max-width:180px; max-height:70px; object-fit:contain; }
+
+        /* Toast */
+        .toast {
+            position:fixed; bottom:2rem; right:2rem; background:var(--green); color:#fff;
+            padding:0.8rem 1.5rem; border-radius:10px; font-size:0.85rem; font-weight:600;
+            box-shadow:0 4px 20px rgba(0,200,83,0.3); opacity:0; transform:translateY(20px);
+            transition:all 0.3s; z-index:999;
+        }
+        .toast.show { opacity:1; transform:translateY(0); }
+
+        /* Preview frame */
+        .preview-frame {
+            width:100%; height:80vh; border:1px solid var(--border); border-radius:12px;
+            overflow:hidden; background:#fff;
+        }
+        .preview-frame iframe { width:100%; height:100%; border:none; }
+
+        /* Responsive */
+        @media (max-width:768px) {
+            .form-grid { grid-template-columns:1fr; }
+            .admin-container { padding:1rem; }
+            .admin-header { flex-direction:column; gap:1rem; }
+            .tabs { overflow-x:auto; }
+            .images-grid { grid-template-columns:repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="admin-header">
+    <h1>⚙️ ALRA Planes <span>· Panel de Administración</span></h1>
+    <div class="header-actions">
+        <button class="btn btn-outline" onclick="saveConfig()">💾 Guardar Config</button>
+        <button class="btn btn-primary" onclick="previewLanding()">👁 Preview</button>
+        <button class="btn btn-success" onclick="downloadLanding()">📥 Descargar Landing</button>
+    </div>
+</div>
+
+<div class="admin-container">
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('models')">🚗 Modelos & Precios</button>
+        <button class="tab" onclick="switchTab('config')">⚙️ Configuración</button>
+        <button class="tab" onclick="switchTab('preview')">👁 Preview</button>
+    </div>
+
+    <!-- MODELS TAB -->
+    <div id="tab-models" class="tab-content active">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+            <h2 class="section-title" style="margin:0;">Modelos <span class="count" id="modelCount">5</span></h2>
+            <button class="btn btn-primary" onclick="addModel()">+ Agregar Modelo</button>
+        </div>
+        <div id="modelsContainer"></div>
+    </div>
+
+    <!-- CONFIG TAB -->
+    <div id="tab-config" class="tab-content">
+        <div class="config-card">
+            <h3>🏢 Datos del Concesionario</h3>
+            <div class="form-grid form-grid-2">
+                <div class="form-group">
+                    <label>Nombre Concesionario</label>
+                    <input type="text" id="cfg-dealer-name" value="ALRA">
+                </div>
+                <div class="form-group">
+                    <label>Subtítulo</label>
+                    <input type="text" id="cfg-dealer-sub" value="Planes de Ahorro">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp (con código país)</label>
+                    <input type="text" id="cfg-whatsapp" value="5491121655405">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" id="cfg-phone" value="0810-112-ALRA (2572)">
+                </div>
+                <div class="form-group">
+                    <label>Texto Hero</label>
+                    <input type="text" id="cfg-hero-title" value='Tu <span class="accent">Volkswagen 0km</span> en cuotas sin interés'>
+                </div>
+                <div class="form-group">
+                    <label>Descripción Hero</label>
+                    <input type="text" id="cfg-hero-desc" value="Financiá tu Volkswagen 0km. Adjudicación asegurada desde cuota 2. Más de 42 años acompañándote.">
+                </div>
+            </div>
+        </div>
+
+        <div class="config-card">
+            <h3>🖼️ Logo</h3>
+            <div class="form-grid form-grid-2">
+                <div class="form-group">
+                    <label>URL del Logo (PNG/JPG)</label>
+                    <input type="text" id="cfg-logo-url" placeholder="https://... (dejar vacío para logo CSS)" oninput="updateLogoPreview()">
+                    <div class="logo-preview" id="logoPreview">
+                        <span class="placeholder">Sin logo personalizado</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Texto del badge (si no hay logo)</label>
+                    <input type="text" id="cfg-logo-text" value="VW">
+                </div>
+            </div>
+        </div>
+
+        <div class="config-card">
+            <h3>📍 Sucursales</h3>
+            <div id="sucursalesContainer"></div>
+            <button class="btn btn-outline btn-sm" onclick="addSucursal()" style="margin-top:1rem;">+ Agregar Sucursal</button>
+        </div>
+    </div>
+
+    <!-- PREVIEW TAB -->
+    <div id="tab-preview" class="tab-content">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <h2 class="section-title" style="margin:0;">Preview de la Landing</h2>
+            <button class="btn btn-primary" onclick="refreshPreview()">🔄 Actualizar Preview</button>
+        </div>
+        <div class="preview-frame">
+            <iframe id="previewFrame" srcdoc="<p style='padding:2rem;color:#888;font-family:sans-serif;'>Hacé clic en 'Actualizar Preview' para ver la landing</p>"></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast">✅ Guardado correctamente</div>
+
+<script>
+// ════════════════════════════════════════
+// DEFAULT DATA
+// ════════════════════════════════════════
+const defaultModels = [
+    {
+        id: 1, name: "Volkswagen Tera", version: "Trend MSI MT · 84 cuotas",
+        planType: "70/30", anticipo: "30%", price: "36.755.250", cuota: "350.574",
+        adjudicacion: "Adjudicación asegurada desde cuota 2",
+        images: ["https://www.alravw.com/files/modelos/1756910362_outfit-blanco-3.png"],
+        waText: "Hola! Quiero info sobre el plan del Tera 70/30"
+    },
+    {
+        id: 2, name: "Volkswagen Nivus", version: "Trendline 200 TSI AT · 84 cuotas",
+        planType: "70/30", anticipo: "30%", price: "46.232.750", cuota: "440.971",
+        adjudicacion: "Adjudicación asegurada desde cuota 2",
+        images: ["https://www.alravw.com/files/modelos/1741627735_1741610523nivusmodelo.png"],
+        waText: "Hola! Quiero info sobre el plan del Nivus 70/30"
+    },
+    {
+        id: 3, name: "Volkswagen T-Cross", version: "Trendline 200 TSI AT · 84 cuotas",
+        planType: "70/30", anticipo: "30%", price: "53.379.850", cuota: "509.141",
+        adjudicacion: "Adjudicación asegurada desde cuota 2",
+        images: ["https://www.alravw.com/files/modelos/1721403979_t-cross.png"],
+        waText: "Hola! Quiero info sobre el plan del T-Cross 70/30"
+    },
+    {
+        id: 4, name: "Volkswagen Taos", version: "Comfortline 250 TSI AT · 84 cuotas",
+        planType: "60/40", anticipo: "40%", price: "57.511.950", cuota: "502.003",
+        adjudicacion: "Adjudicación asegurada desde cuota 2",
+        images: ["https://www.alravw.com/files/modelos/1766083345_taosmodelo2.png"],
+        waText: "Hola! Quiero info sobre el plan del Taos 60/40"
+    },
+    {
+        id: 5, name: "Volkswagen Amarok", version: "Trendline 2.0 TDI 4x2 · 84 cuotas",
+        planType: "60/40", anticipo: "40%", price: "58.255.550", cuota: "508.493",
+        adjudicacion: "Adjudicación asegurada desde cuota 2",
+        images: ["https://www.alravw.com/files/modelos/1724164206_amarok.png"],
+        waText: "Hola! Quiero info sobre el plan de la Amarok 60/40"
+    }
+];
+
+const defaultSucursales = [
+    { name: "Floresta", address: "Av. Gaona 4460 (C1407FIF)", phone: "(011) 4117-4154", hours: "Lun a Vie 9-19hs · Sáb 9-13hs", mapQuery: "Av.+Gaona+4460+Buenos+Aires" },
+    { name: "Liniers", address: "Av. Juan B. Justo 9412 (C1408AKY)", phone: "(011) 4117-4154", hours: "Lun a Vie 9-19hs · Sáb 9-13hs", mapQuery: "Av.+Juan+B.+Justo+9412+Buenos+Aires" },
+    { name: "Alra Corrientes", address: "Av. Corrientes 5899, CABA", phone: "0810-112-ALRA (2572)", hours: "Lun a Vie 9-18hs", mapQuery: "Av.+Corrientes+5899+Buenos+Aires" }
+];
+
+let models = [];
+let sucursales = [];
+let nextModelId = 10;
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+function init() {
+    const saved = localStorage.getItem('alra-admin-config');
+    if (saved) {
+        const cfg = JSON.parse(saved);
+        models = cfg.models || defaultModels;
+        // Migrate old imgUrl to images array + financiado to anticipo
+        models.forEach(m => {
+            if (!m.images) m.images = m.imgUrl ? [m.imgUrl] : [];
+            delete m.imgUrl;
+            if (m.financiado && !m.anticipo) {
+                const pct = parseInt(m.financiado);
+                m.anticipo = pct ? (100 - pct) + '%' : '30%';
+                delete m.financiado;
+            }
+            if (!m.anticipo) m.anticipo = m.planType === '60/40' ? '40%' : '30%';
+        });
+        sucursales = cfg.sucursales || defaultSucursales;
+        if (cfg.config) {
+            setTimeout(() => {
+                if (cfg.config.dealerName) document.getElementById('cfg-dealer-name').value = cfg.config.dealerName;
+                if (cfg.config.dealerSub) document.getElementById('cfg-dealer-sub').value = cfg.config.dealerSub;
+                if (cfg.config.whatsapp) document.getElementById('cfg-whatsapp').value = cfg.config.whatsapp;
+                if (cfg.config.phone) document.getElementById('cfg-phone').value = cfg.config.phone;
+                if (cfg.config.heroTitle) document.getElementById('cfg-hero-title').value = cfg.config.heroTitle;
+                if (cfg.config.heroDesc) document.getElementById('cfg-hero-desc').value = cfg.config.heroDesc;
+                if (cfg.config.logoUrl) { document.getElementById('cfg-logo-url').value = cfg.config.logoUrl; updateLogoPreview(); }
+                if (cfg.config.logoText) document.getElementById('cfg-logo-text').value = cfg.config.logoText;
+            }, 100);
+        }
+    } else {
+        models = JSON.parse(JSON.stringify(defaultModels));
+        sucursales = [...defaultSucursales];
+    }
+    nextModelId = Math.max(...models.map(m => m.id), 10) + 1;
+    renderModels();
+    renderSucursales();
+}
+
+// ════════════════════════════════════════
+// RENDER MODELS
+// ════════════════════════════════════════
+function renderModels() {
+    const container = document.getElementById('modelsContainer');
+    document.getElementById('modelCount').textContent = models.length;
+    container.innerHTML = models.map((m, idx) => {
+        const imgSlots = Array.from({length: 10}, (_, i) => {
+            const hasImg = m.images && m.images[i];
+            return `<div class="img-slot ${i===0?'primary':''}" onclick="${hasImg ? '' : `promptImageUrl(${m.id},${i})`}">
+                <span class="slot-num">${i===0?'Principal':i+1}</span>
+                ${hasImg ? `<img src="${m.images[i]}" onerror="this.src=''"><button class="slot-remove" onclick="event.stopPropagation();removeImage(${m.id},${i})">✕</button>` : `<span class="slot-empty">+ Foto</span>`}
+            </div>`;
+        }).join('');
+
+        const imgCount = (m.images||[]).filter(Boolean).length;
+
+        return `
+        <div class="model-card" id="model-${m.id}">
+            <div class="model-card-header">
+                <span class="model-card-title">${m.name}</span>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                    <span class="model-card-badge badge-${m.planType === '70/30' ? '70' : m.planType === '60/40' ? '60' : '100'}">${m.planType}</span>
+                    <button class="btn btn-danger btn-sm" onclick="removeModel(${m.id})">🗑</button>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nombre del Modelo</label>
+                    <input type="text" value="${m.name}" onchange="updateModel(${m.id},'name',this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Versión / Cuotas</label>
+                    <input type="text" value="${m.version}" onchange="updateModel(${m.id},'version',this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Plan</label>
+                    <select onchange="updateModel(${m.id},'planType',this.value)">
+                        <option value="70/30" ${m.planType==='70/30'?'selected':''}>70/30</option>
+                        <option value="60/40" ${m.planType==='60/40'?'selected':''}>60/40</option>
+                        <option value="100%" ${m.planType==='100%'?'selected':''}>100%</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Valor 0km ($)</label>
+                    <input type="text" value="${m.price}" onchange="updateModel(${m.id},'price',this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Cuota desde ($)</label>
+                    <input type="text" value="${m.cuota}" onchange="updateModel(${m.id},'cuota',this.value)">
+                </div>
+                <div class="form-group">
+                    <label>% Anticipo</label>
+                    <input type="text" value="${m.anticipo}" onchange="updateModel(${m.id},'anticipo',this.value)">
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Texto Adjudicación</label>
+                    <input type="text" value="${m.adjudicacion}" onchange="updateModel(${m.id},'adjudicacion',this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Texto WhatsApp</label>
+                    <input type="text" value="${m.waText}" onchange="updateModel(${m.id},'waText',this.value)">
+                </div>
+            </div>
+            <div style="margin-top:1rem;">
+                <label style="font-size:0.7rem;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;">
+                    🖼️ Imágenes del auto (${imgCount}/10) — Hacé clic en un slot para agregar URL
+                </label>
+                <div class="images-grid">${imgSlots}</div>
+                <input type="text" class="img-url-input" id="img-input-${m.id}" placeholder="Pegá la URL de la imagen y presioná Enter" onkeydown="if(event.key==='Enter')addImageFromInput(${m.id})" style="display:none;">
+                <p class="img-counter">La primera imagen es la principal (se muestra en la tarjeta). Las demás se ven en el carrusel.</p>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+let pendingSlotIndex = null;
+
+function promptImageUrl(modelId, slotIndex) {
+    pendingSlotIndex = slotIndex;
+    const input = document.getElementById(`img-input-${modelId}`);
+    input.style.display = 'block';
+    input.value = '';
+    input.placeholder = `URL para foto ${slotIndex === 0 ? 'principal' : slotIndex+1} — pegá y presioná Enter`;
+    input.focus();
+}
+
+function addImageFromInput(modelId) {
+    const input = document.getElementById(`img-input-${modelId}`);
+    const url = input.value.trim();
+    if (!url) return;
+    const m = models.find(x => x.id === modelId);
+    if (!m) return;
+    if (!m.images) m.images = [];
+
+    if (pendingSlotIndex !== null && pendingSlotIndex < 10) {
+        // Fill the specific slot
+        while (m.images.length <= pendingSlotIndex) m.images.push('');
+        m.images[pendingSlotIndex] = url;
+    } else {
+        // Add to next empty slot
+        if (m.images.length >= 10) { showToast('⚠️ Máximo 10 imágenes'); return; }
+        m.images.push(url);
+    }
+    input.style.display = 'none';
+    input.value = '';
+    pendingSlotIndex = null;
+    renderModels();
+}
+
+function removeImage(modelId, index) {
+    const m = models.find(x => x.id === modelId);
+    if (m && m.images) {
+        m.images.splice(index, 1);
+        renderModels();
+    }
+}
+
+function updateModel(id, field, value) {
+    const m = models.find(x => x.id === id);
+    if (m) {
+        m[field] = value;
+        if (field === 'planType') {
+            m.anticipo = value === '70/30' ? '30%' : value === '60/40' ? '40%' : '0%';
+        }
+        if (field === 'name' || field === 'planType') renderModels();
+    }
+}
+
+function addModel() {
+    models.push({
+        id: nextModelId++,
+        name: "Volkswagen Nuevo Modelo",
+        version: "Versión · 84 cuotas",
+        planType: "70/30", anticipo: "30%",
+        price: "0", cuota: "0",
+        adjudicacion: "Adjudicación asegurada desde cuota 2",
+        images: [],
+        waText: "Hola! Quiero info sobre el plan"
+    });
+    renderModels();
+    setTimeout(() => {
+        const cards = document.querySelectorAll('.model-card');
+        cards[cards.length - 1]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+}
+
+function removeModel(id) {
+    if (confirm('¿Eliminar este modelo?')) {
+        models = models.filter(m => m.id !== id);
+        renderModels();
+    }
+}
+
+// ════════════════════════════════════════
+// RENDER SUCURSALES
+// ════════════════════════════════════════
+function renderSucursales() {
+    const container = document.getElementById('sucursalesContainer');
+    container.innerHTML = sucursales.map((s, idx) => `
+        <div style="background:var(--bg-input);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:0.8rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem;">
+                <strong style="font-size:0.9rem;">📍 ${s.name}</strong>
+                <button class="btn btn-danger btn-sm" onclick="removeSucursal(${idx})">🗑</button>
+            </div>
+            <div class="form-grid form-grid-2">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" value="${s.name}" onchange="sucursales[${idx}].name=this.value;renderSucursales()">
+                </div>
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <input type="text" value="${s.address}" onchange="sucursales[${idx}].address=this.value">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" value="${s.phone}" onchange="sucursales[${idx}].phone=this.value">
+                </div>
+                <div class="form-group">
+                    <label>Horarios</label>
+                    <input type="text" value="${s.hours}" onchange="sucursales[${idx}].hours=this.value">
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Query Google Maps</label>
+                    <input type="text" value="${s.mapQuery}" onchange="sucursales[${idx}].mapQuery=this.value">
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function addSucursal() {
+    sucursales.push({ name:"Nueva Sucursal", address:"", phone:"", hours:"Lun a Vie 9-19hs", mapQuery:"" });
+    renderSucursales();
+}
+
+function removeSucursal(idx) {
+    if (confirm('¿Eliminar esta sucursal?')) {
+        sucursales.splice(idx, 1);
+        renderSucursales();
+    }
+}
+
+// ════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════
+function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    event.target.classList.add('active');
+    if (tab === 'preview') refreshPreview();
+}
+
+// ════════════════════════════════════════
+// SAVE / LOAD CONFIG
+// ════════════════════════════════════════
+function getConfig() {
+    return {
+        dealerName: document.getElementById('cfg-dealer-name').value,
+        dealerSub: document.getElementById('cfg-dealer-sub').value,
+        whatsapp: document.getElementById('cfg-whatsapp').value,
+        phone: document.getElementById('cfg-phone').value,
+        heroTitle: document.getElementById('cfg-hero-title').value,
+        heroDesc: document.getElementById('cfg-hero-desc').value,
+        logoUrl: document.getElementById('cfg-logo-url').value,
+        logoText: document.getElementById('cfg-logo-text').value,
+    };
+}
+
+function saveConfig() {
+    localStorage.setItem('alra-admin-config', JSON.stringify({
+        models, sucursales, config: getConfig()
+    }));
+    showToast('✅ Configuración guardada');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function updateLogoPreview() {
+    const url = document.getElementById('cfg-logo-url').value;
+    const el = document.getElementById('logoPreview');
+    el.innerHTML = url ? `<img src="${url}" onerror="this.parentNode.innerHTML='<span class=placeholder>Error cargando logo</span>'">` : '<span class="placeholder">Sin logo personalizado</span>';
+}
+
+// ════════════════════════════════════════
+// GENERATE LANDING HTML
+// ════════════════════════════════════════
+function generateLandingHTML() {
+    const cfg = getConfig();
+    const wa = cfg.whatsapp;
+    const waLink = (text) => `https://wa.me/${wa}?text=${encodeURIComponent(text)}`;
+
+    const logoHTML = cfg.logoUrl
+        ? `<img src="${cfg.logoUrl}" alt="${cfg.dealerName}" style="height:44px;border-radius:6px;">`
+        : `<div class="logo-vw">${cfg.logoText || 'VW'}</div>`;
+
+    const modelCards = models.map((m, mIdx) => {
+        const planClass = m.planType === '70/30' ? '70' : m.planType === '60/40' ? '60' : '100';
+        const imgs = (m.images || []).filter(Boolean);
+        const mainImg = imgs[0] || '';
+        const hasGallery = imgs.length > 1;
+        return `
+            <div class="plan-card">
+                <div class="plan-card-header">
+                    <span class="plan-badge">Autoahorro VW</span>
+                    <span class="plan-type plan-type-${planClass}">${m.planType}</span>
+                </div>
+                <div class="plan-card-img${hasGallery ? ' has-gallery' : ''}" ${hasGallery ? `onclick="openGallery(${mIdx})"` : ''}>
+                    ${mainImg ? `<img src="${mainImg}" alt="${m.name}">` : `<span class="plan-card-img-placeholder">🚗</span>`}
+                    <div class="plan-img-glow"></div>
+                    ${hasGallery ? `<div class="photo-count">📷 ${imgs.length} fotos</div>` : ''}
+                </div>
+                <div class="plan-card-body">
+                    <h3 class="plan-model-name">${m.name}</h3>
+                    <p class="plan-model-version">${m.version}</p>
+                    <div class="plan-details">
+                        <div class="plan-detail">
+                            <span class="plan-detail-label">Valor 0km</span>
+                            <span class="plan-detail-value">$${m.price}</span>
+                        </div>
+                        <div class="plan-detail">
+                            <span class="plan-detail-label">Anticipo</span>
+                            <span class="plan-detail-value">${m.anticipo}</span>
+                        </div>
+                    </div>
+                    <div class="plan-cuota-box">
+                        <p class="plan-cuota-label">Cuota desde</p>
+                        <p class="plan-cuota-value">$${m.cuota} <small>/mes</small></p>
+                    </div>
+                    <div class="plan-adjudicacion">
+                        <span class="plan-adjudicacion-icon">✓</span>
+                        ${m.adjudicacion}
+                    </div>
+                    <div class="plan-card-buttons">
+                        <a href="#contacto" class="plan-btn plan-btn-primary">Consultar</a>
+                        <a href="${waLink(m.waText)}" target="_blank" class="plan-btn plan-btn-wa">💬 WhatsApp</a>
+                    </div>
+                </div>
+            </div>`;
+    }).join('\n');
+
+    // Build gallery data for JS
+    const galleryData = models.map(m => ({
+        name: m.name,
+        version: m.version,
+        images: (m.images || []).filter(Boolean)
+    }));
+
+    const sucursalCards = sucursales.map(s => `
+            <div class="sucursal-card">
+                <div class="sucursal-card-body">
+                    <h3>📍 ${s.name}</h3>
+                    <div class="sucursal-detail">
+                        <span class="sucursal-detail-icon">🏠</span>
+                        <span>${s.address}</span>
+                    </div>
+                    <div class="sucursal-detail">
+                        <span class="sucursal-detail-icon">📞</span>
+                        <span>${s.phone}</span>
+                    </div>
+                    <div class="sucursal-detail">
+                        <span class="sucursal-detail-icon">🕐</span>
+                        <span>${s.hours}</span>
+                    </div>
+                    <div class="sucursal-buttons">
+                        <a href="${waLink('Hola! Consulto desde ' + s.name)}" target="_blank" class="sucursal-btn sucursal-btn-wa">💬 WhatsApp</a>
+                        <a href="https://maps.google.com/?q=${s.mapQuery}" target="_blank" class="sucursal-btn sucursal-btn-map">📍 Cómo llegar</a>
+                    </div>
+                </div>
+            </div>`).join('\n');
+
+    const sucursalMaps = sucursales.map(s => `
+            <div class="map-container">
+                <div class="map-label">
+                    <h5>${s.name}</h5>
+                    <p>${s.address}</p>
+                </div>
+                <iframe src="https://maps.google.com/maps?q=${s.mapQuery},+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+            </div>`).join('\n');
+
+    // Build the full HTML using the existing template structure
+    return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${cfg.dealerName} Planes | Volkswagen · Concesionario Oficial</title>
+    <meta name="description" content="Planes Volkswagen en ${cfg.dealerName}. Financiá tu 0km en cuotas sin interés. Adjudicación asegurada desde cuota 2. ${models.map(m=>m.name.replace('Volkswagen ','')).join(', ')}.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vw-blue: #001E50;
+            --vw-blue-light: #00437A;
+            --vw-blue-accent: #0066CC;
+            --vw-blue-glow: #1a8cff;
+            --vw-blue-soft: #e8f0fe;
+            --black: #08090c;
+            --black-light: #0f1117;
+            --black-lighter: #161820;
+            --black-card: #1a1c26;
+            --white: #ffffff;
+            --gray: #8a8fa3;
+            --gray-dark: #3a3d4a;
+            --green-wa: #25D366;
+            --success: #00c853;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--vw-blue-accent); border-radius: 3px; }
+
+        .topbar { background: var(--vw-blue); padding: 0.5rem 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(255,255,255,0.8); }
+        .topbar a { color: var(--white); text-decoration: none; font-weight: 500; }
+        .topbar-left { display: flex; gap: 1.5rem; align-items: center; }
+        .topbar-right { display: flex; gap: 1rem; align-items: center; }
+
+        .navbar { position: sticky; top: 0; z-index: 1000; padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(8,9,12,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,30,80,0.3); transition: all 0.4s ease; }
+        .navbar.scrolled { box-shadow: 0 5px 30px rgba(0,0,0,0.5); border-bottom-color: var(--vw-blue); }
+        .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+        .logo-vw { width: 48px; height: 48px; border: 2px solid var(--vw-blue-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.7rem; color: var(--vw-blue-accent); letter-spacing: 1px; position: relative; }
+        .logo-vw::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid rgba(0,102,204,0.3); }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-alra { font-size: 1.4rem; font-weight: 800; color: var(--white); letter-spacing: 3px; line-height: 1; }
+        .logo-planes { font-size: 0.65rem; font-weight: 400; color: var(--vw-blue-accent); letter-spacing: 4px; text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--vw-blue-accent); transition: width 0.3s; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-wa { display: flex; align-items: center; gap: 0.5rem; background: var(--green-wa); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.82rem !important; font-weight: 600 !important; transition: transform 0.3s, box-shadow 0.3s !important; }
+        .nav-wa:hover { transform: scale(1.05) !important; box-shadow: 0 0 25px rgba(37,211,102,0.4) !important; }
+        .nav-wa::after { display: none !important; }
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .menu-toggle span { width: 24px; height: 2px; background: var(--white); transition: 0.3s; border-radius: 2px; }
+
+        .hero { position: relative; min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 4rem 5%; }
+        .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(0,102,204,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(0,30,80,0.2) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(0,67,122,0.08) 0%, transparent 70%); }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(circle at center, black 30%, transparent 80%); }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; }
+        .particle { position: absolute; width: 3px; height: 3px; background: var(--vw-blue-accent); border-radius: 50%; opacity: 0; animation: float-up 8s infinite; }
+        @keyframes float-up { 0% { opacity: 0; transform: translateY(100vh) scale(0); } 20% { opacity: 0.6; } 80% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-10vh) scale(1); } }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,102,204,0.15); border: 1px solid rgba(0,102,204,0.3); padding: 0.4rem 1.2rem; border-radius: 50px; font-size: 0.75rem; font-weight: 500; color: var(--vw-blue-glow); margin-bottom: 2rem; animation: fadeInDown 0.8s ease; }
+        .hero-badge-dot { width: 6px; height: 6px; background: var(--vw-blue-glow); border-radius: 50%; animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem; animation: fadeInUp 1s ease; }
+        .hero h1 .accent { background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.1rem; color: var(--gray); max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; animation: fadeInUp 1.2s ease; }
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; animation: fadeInUp 1.4s ease; }
+        .hero-stat { text-align: center; }
+        .hero-stat-value { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-stat-label { font-size: 0.72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; }
+        .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1.6s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue)); color: var(--white); box-shadow: 0 4px 20px rgba(0,102,204,0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,102,204,0.5); }
+        .btn-wa { background: var(--green-wa); color: var(--white); box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
+        .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.5); }
+        .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--gray-dark); }
+        .btn-outline:hover { border-color: var(--vw-blue-accent); background: rgba(0,102,204,0.1); }
+
+        .section { padding: 5rem 5%; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--vw-blue-accent); margin-bottom: 1rem; position: relative; padding: 0 1rem; }
+        .section-tag::before, .section-tag::after { content: ''; position: absolute; top: 50%; width: 30px; height: 1px; background: var(--vw-blue-accent); opacity: 0.5; }
+        .section-tag::before { right: 100%; }
+        .section-tag::after { left: 100%; }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 0.8rem; }
+        .section-subtitle { font-size: 1rem; color: var(--gray); max-width: 550px; margin: 0 auto; }
+
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        .plan-card { background: var(--black-card); border-radius: 16px; border: 1px solid rgba(0,102,204,0.1); overflow: hidden; transition: all 0.4s ease; position: relative; }
+        .plan-card:hover { transform: translateY(-8px); border-color: rgba(0,102,204,0.4); box-shadow: 0 20px 50px rgba(0,102,204,0.15); }
+        .plan-card-header { padding: 1.2rem 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-start; }
+        .plan-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 0.3rem 0.8rem; border-radius: 50px; background: rgba(0,102,204,0.15); color: var(--vw-blue-glow); border: 1px solid rgba(0,102,204,0.2); }
+        .plan-type { font-size: 0.65rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 50px; letter-spacing: 1px; }
+        .plan-type-70 { background: rgba(0,200,83,0.15); color: #00c853; }
+        .plan-type-60 { background: rgba(255,171,0,0.15); color: #ffab00; }
+        .plan-type-100 { background: rgba(0,102,204,0.2); color: var(--vw-blue-glow); }
+        .plan-card-img { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .plan-card-img img { max-width: 85%; max-height: 160px; object-fit: contain; transition: transform 0.5s ease; }
+        .plan-card:hover .plan-card-img img { transform: scale(1.08); }
+        .plan-card-img-placeholder { font-size: 4rem; opacity: 0.7; }
+        .plan-img-glow { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 70%; height: 30px; background: radial-gradient(ellipse, rgba(0,102,204,0.2), transparent); filter: blur(15px); }
+        .plan-card-img.has-gallery { cursor: pointer; }
+        .plan-card-img.has-gallery:hover img { transform: scale(1.08); filter: brightness(1.1); }
+        .photo-count { position: absolute; bottom: 10px; right: 12px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); color: #fff; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); pointer-events: none; }
+
+        /* Gallery Modal */
+        .gallery-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); backdrop-filter:blur(10px); }
+        .gallery-overlay.active { display:flex; align-items:center; justify-content:center; flex-direction:column; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .gallery-header { width:100%; max-width:900px; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+        .gallery-title { font-size:1.1rem; font-weight:700; }
+        .gallery-subtitle { font-size:0.78rem; color:var(--gray); }
+        .gallery-close { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+        .gallery-close:hover { background:rgba(255,255,255,0.2); }
+        .gallery-main { position:relative; width:100%; max-width:900px; aspect-ratio:16/9; max-height:65vh; display:flex; align-items:center; justify-content:center; }
+        .gallery-main img { max-width:90%; max-height:100%; object-fit:contain; border-radius:8px; transition: opacity 0.3s ease; }
+        .gallery-nav { position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.1); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+        .gallery-nav:hover { background:rgba(0,102,204,0.4); border-color:rgba(0,102,204,0.5); }
+        .gallery-prev { left:1rem; }
+        .gallery-next { right:1rem; }
+        .gallery-counter { padding:0.6rem; font-size:0.78rem; color:var(--gray); text-align:center; }
+        .gallery-thumbs { display:flex; gap:0.5rem; padding:0.5rem 1rem; max-width:900px; overflow-x:auto; }
+        .gallery-thumb { width:64px; height:48px; border-radius:6px; overflow:hidden; border:2px solid transparent; cursor:pointer; opacity:0.5; transition:all 0.2s; flex-shrink:0; }
+        .gallery-thumb.active { border-color:var(--vw-blue-accent); opacity:1; }
+        .gallery-thumb:hover { opacity:0.8; }
+        .gallery-thumb img { width:100%; height:100%; object-fit:cover; }
+        .plan-card-body { padding: 0 1.5rem 1.5rem; }
+        .plan-model-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.15rem; }
+        .plan-model-version { font-size: 0.78rem; color: var(--gray); margin-bottom: 1rem; }
+        .plan-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.2rem; }
+        .plan-detail { display: flex; flex-direction: column; }
+        .plan-detail-label { font-size: 0.65rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        .plan-detail-value { font-size: 0.9rem; font-weight: 600; }
+        .plan-cuota-box { background: linear-gradient(135deg, rgba(0,102,204,0.1), rgba(0,30,80,0.15)); border: 1px solid rgba(0,102,204,0.2); border-radius: 12px; padding: 1rem; text-align: center; margin-bottom: 1rem; }
+        .plan-cuota-label { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+        .plan-cuota-value { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .plan-cuota-value small { font-size: 0.7rem; font-weight: 400; -webkit-text-fill-color: var(--gray); }
+        .plan-adjudicacion { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; font-size: 0.78rem; color: var(--success); margin-bottom: 1rem; }
+        .plan-adjudicacion-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,200,83,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; }
+        .plan-card-buttons { display: flex; gap: 0.6rem; }
+        .plan-btn { flex: 1; padding: 0.7rem; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
+        .plan-btn-primary { background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue)); color: var(--white); }
+        .plan-btn-primary:hover { box-shadow: 0 4px 15px rgba(0,102,204,0.4); }
+        .plan-btn-wa { background: var(--green-wa); color: var(--white); display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+        .plan-btn-wa:hover { box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
+
+        .benefits-section { background: var(--black-light); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+        .benefit-card { background: var(--black-card); border-radius: 16px; padding: 2rem; border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; text-align: center; }
+        .benefit-card:hover { border-color: rgba(0,102,204,0.3); transform: translateY(-4px); }
+        .benefit-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, rgba(0,102,204,0.15), rgba(0,30,80,0.1)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1.2rem; border: 1px solid rgba(0,102,204,0.2); }
+        .benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .benefit-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+        .steps-container { display: flex; gap: 2rem; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+        .step-card { flex: 1; min-width: 220px; max-width: 300px; text-align: center; position: relative; }
+        .step-number { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--vw-blue-accent), var(--vw-blue)); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800; margin: 0 auto 1.2rem; }
+        .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .step-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+        .faq-container { max-width: 750px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .faq-question { width: 100%; padding: 1.3rem 0; background: none; border: none; color: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s; }
+        .faq-question:hover { color: var(--vw-blue-glow); }
+        .faq-icon { font-size: 1.2rem; transition: transform 0.3s; color: var(--vw-blue-accent); }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+        .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 1.3rem; }
+        .faq-answer p { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
+
+        .cta-section { background: linear-gradient(135deg, var(--vw-blue) 0%, var(--vw-blue-light) 100%); text-align: center; position: relative; overflow: hidden; }
+        .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(0,0,0,0.2) 0%, transparent 50%); }
+        .cta-content { position: relative; z-index: 2; }
+        .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1rem; opacity: 0.85; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .cta-info { display: flex; gap: 2.5rem; justify-content: center; margin-top: 3rem; flex-wrap: wrap; }
+        .cta-info-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; opacity: 0.9; }
+        .cta-info-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; }
+
+        .sucursales-section { background: var(--black-light); }
+        .sucursales-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto 2rem; }
+        .sucursal-card { background: var(--black-card); border-radius: 14px; border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; overflow: hidden; }
+        .sucursal-card:hover { border-color: rgba(0,102,204,0.3); transform: translateY(-4px); }
+        .sucursal-card-body { padding: 1.5rem; }
+        .sucursal-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; }
+        .sucursal-detail { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--gray); margin-bottom: 0.5rem; }
+        .sucursal-detail-icon { font-size: 0.9rem; }
+        .sucursal-buttons { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
+        .sucursal-btn { flex: 1; padding: 0.6rem; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.3s; }
+        .sucursal-btn-wa { background: var(--green-wa); color: var(--white); }
+        .sucursal-btn-wa:hover { box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
+        .sucursal-btn-map { background: rgba(0,102,204,0.15); color: var(--vw-blue-glow); border: 1px solid rgba(0,102,204,0.2); }
+        .sucursal-btn-map:hover { background: rgba(0,102,204,0.25); }
+
+        .sucursales-maps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto; }
+        .map-container { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); background: var(--black-card); }
+        .map-label { padding: 0.8rem 1rem 0.5rem; }
+        .map-label h5 { font-size: 0.85rem; font-weight: 600; }
+        .map-label p { font-size: 0.72rem; color: var(--gray); }
+        .map-container iframe { width: 100%; height: 200px; border: none; }
+
+        .footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); padding: 3rem 5% 1.5rem; }
+        .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .footer-brand { max-width: 300px; }
+        .footer-brand p { font-size: 0.78rem; color: var(--gray); margin-top: 0.8rem; line-height: 1.6; }
+        .footer-links-group h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--white); }
+        .footer-links-group a { display: block; font-size: 0.78rem; color: var(--gray); text-decoration: none; margin-bottom: 0.4rem; transition: color 0.3s; }
+        .footer-links-group a:hover { color: var(--vw-blue-accent); }
+        .footer-social { display: flex; gap: 0.8rem; }
+        .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: var(--black-card); border: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--gray); text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .footer-social a:hover { background: var(--vw-blue-accent); color: var(--white); border-color: var(--vw-blue-accent); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; }
+        .footer-legal { font-size: 0.65rem; color: var(--gray-dark); line-height: 1.6; max-width: 900px; }
+        .footer-copy { font-size: 0.72rem; color: var(--gray); margin-top: 1rem; }
+
+        .wa-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; width: 60px; height: 60px; border-radius: 50%; background: var(--green-wa); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.3s; text-decoration: none; font-size: 1.6rem; }
+        .wa-float:hover { transform: scale(1.1); }
+        .wa-float::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(37,211,102,0.3); animation: wa-pulse 2s infinite; }
+        @keyframes wa-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0; } }
+
+        @media (max-width: 768px) {
+            .topbar { display: none; }
+            .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8,9,12,0.98); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; z-index: 1001; }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: flex; z-index: 1002; }
+            .hero { min-height: 75vh; }
+            .hero-stats { gap: 1.5rem; }
+            .hero-stat-value { font-size: 1.5rem; }
+            .plans-grid { grid-template-columns: 1fr; max-width: 420px; }
+            .benefits-grid { grid-template-columns: 1fr 1fr; }
+            .steps-container { flex-direction: column; align-items: center; }
+            .cta-info { flex-direction: column; align-items: center; gap: 1rem; }
+            .footer-top { flex-direction: column; }
+            .sucursales-grid { grid-template-columns: 1fr 1fr; }
+            .sucursales-maps { grid-template-columns: 1fr; }
+            .gallery-main { max-height: 50vh; }
+            .gallery-nav { width:36px; height:36px; font-size:1rem; }
+            .gallery-prev { left:0.3rem; }
+            .gallery-next { right:0.3rem; }
+            .gallery-thumb { width:50px; height:38px; }
+        }
+        @media (max-width: 480px) {
+            .benefits-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-wrap: wrap; gap: 1rem; }
+            .hero-ctas { flex-direction: column; align-items: center; }
+            .sucursales-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-phone">📞 <a href="tel:08101122572">${cfg.phone}</a></div>
+            <span>Concesionario Oficial Volkswagen</span>
+        </div>
+        <div class="topbar-right">
+            <a href="https://www.alravw.com/sucursales/" target="_blank">📍 Sucursales</a>
+            <a href="${waLink('Hola! Quiero info sobre planes de ahorro VW')}" target="_blank">💬 Chat en vivo</a>
+        </div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            ${logoHTML}
+            <div class="logo-text">
+                <span class="logo-alra">${cfg.dealerName}</span>
+                <span class="logo-planes">${cfg.dealerSub}</span>
+            </div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#planes">Planes</a></li>
+            <li><a href="#beneficios">Beneficios</a></li>
+            <li><a href="#como-funciona">Cómo funciona</a></li>
+            <li><a href="#faq">Preguntas</a></li>
+            <li><a href="#sucursales">Sucursales</a></li>
+            <li><a href="${waLink('Hola! Quiero info sobre planes de ahorro VW')}" target="_blank" class="nav-wa">💬 WhatsApp</a></li>
+        </ul>
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-particles">
+            <div class="particle" style="left:10%;animation-delay:0s"></div>
+            <div class="particle" style="left:25%;animation-delay:1.5s"></div>
+            <div class="particle" style="left:40%;animation-delay:3s"></div>
+            <div class="particle" style="left:55%;animation-delay:0.8s"></div>
+            <div class="particle" style="left:70%;animation-delay:2.2s"></div>
+            <div class="particle" style="left:85%;animation-delay:4s"></div>
+            <div class="particle" style="left:95%;animation-delay:1s"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Autoahorro Volkswagen · Concesionario Oficial
+            </div>
+            <h1>${cfg.heroTitle}</h1>
+            <p>${cfg.heroDesc}</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="hero-stat-value">0%</div><div class="hero-stat-label">Interés</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">84</div><div class="hero-stat-label">Cuotas</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">100%</div><div class="hero-stat-label">Financiado</div></div>
+                <div class="hero-stat"><div class="hero-stat-value">Cta 2</div><div class="hero-stat-label">Adjudicación</div></div>
+            </div>
+            <div class="hero-ctas">
+                <a href="#planes" class="btn btn-primary">Ver Planes Disponibles</a>
+                <a href="${waLink('Hola! Quiero info sobre planes VW')}" target="_blank" class="btn btn-wa">💬 Consultá por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="planes">
+        <div class="section-header">
+            <span class="section-tag">Planes Vigentes</span>
+            <h2 class="section-title">Elegí tu Volkswagen</h2>
+            <p class="section-subtitle">Todos los modelos con financiación oficial de fábrica. Sin sorpresas.</p>
+        </div>
+        <div class="plans-grid">
+${modelCards}
+        </div>
+    </section>
+
+    <section class="section benefits-section" id="beneficios">
+        <div class="section-header">
+            <span class="section-tag">Beneficios Exclusivos</span>
+            <h2 class="section-title">¿Por qué elegir ${cfg.dealerName}?</h2>
+            <p class="section-subtitle">El concesionario N°1 de Volkswagen te da más</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card"><div class="benefit-icon">🎁</div><h3>6 Cuotas Bonificadas</h3><p>Promoción exclusiva para nuevos suscriptores. Consultá vigencia y condiciones.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🚗</div><h3>Tomamos tu Usado</h3><p>Mejor cotización del mercado para tu usado como parte de pago del plan.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">⚡</div><h3>Adjudicación Asegurada</h3><p>Adjudicación asegurada desde la cuota 2. Tu Volkswagen 0km más cerca que nunca.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">📋</div><h3>Sin Requisitos</h3><p>No necesitás recibo de sueldo, informe de Veraz ni garante para suscribir.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🛡️</div><h3>0% Interés</h3><p>Cuotas en pesos sin intereses bancarios. Solo pagás la alícuota del plan.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🏆</div><h3>+42 Años de Confianza</h3><p>Concesionario oficial con la mejor reputación y servicio postventa de la red.</p></div>
+        </div>
+    </section>
+
+    <section class="section" id="como-funciona">
+        <div class="section-header">
+            <span class="section-tag">Paso a Paso</span>
+            <h2 class="section-title">¿Cómo funciona?</h2>
+            <p class="section-subtitle">Tu 0km en 4 simples pasos</p>
+        </div>
+        <div class="steps-container">
+            <div class="step-card"><div class="step-number">1</div><h3>Elegí tu modelo</h3><p>Seleccioná el Volkswagen que más te guste y el plan que se adapte a tu bolsillo.</p></div>
+            <div class="step-card"><div class="step-number">2</div><h3>Suscribite</h3><p>Completá tus datos. Sin requisitos de ingreso, sin garante, sin recibo de sueldo.</p></div>
+            <div class="step-card"><div class="step-number">3</div><h3>Pagá tus cuotas</h3><p>Cuotas en pesos, sin interés. Adjudicación asegurada desde cuota 2.</p></div>
+            <div class="step-card"><div class="step-number">4</div><h3>Retirá tu 0km</h3><p>Con la adjudicación asegurada desde cuota 2, completá el porcentaje restante y retirá tu Volkswagen 0km.</p></div>
+        </div>
+    </section>
+
+    <section class="section" id="faq" style="background: var(--black-light);">
+        <div class="section-header">
+            <span class="section-tag">Preguntas Frecuentes</span>
+            <h2 class="section-title">Todo lo que necesitás saber</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Qué es un Plan de Ahorro?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Es un sistema donde un grupo de personas aporta cuotas mensuales para adquirir un Volkswagen 0km. Contás con adjudicación asegurada desde la cuota 2, además de participar en sorteos y licitaciones mensuales.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Qué diferencia hay entre plan 70/30 y 60/40?<span class="faq-icon">+</span></button><div class="faq-answer"><p>En un plan 70/30 se financia el 70% del valor del auto en cuotas y el 30% restante se abona al momento de la adjudicación. En el 60/40, se financia el 60% y se abona el 40% al adjudicar.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Necesito recibo de sueldo o garante?<span class="faq-icon">+</span></button><div class="faq-answer"><p>No. Para suscribirte solo necesitás tu DNI y completar la solicitud de adhesión. No se requiere recibo de sueldo, informe de Veraz ni garante.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Cómo me adjudican el auto?<span class="faq-icon">+</span></button><div class="faq-answer"><p>La adjudicación es asegurada desde la cuota 2. También participás automáticamente de sorteos mensuales y podés licitar ofreciendo un porcentaje del valor móvil para acelerar la entrega.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Puedo entregar mi auto usado?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Sí. En ${cfg.dealerName} te ofrecemos la mejor cotización del mercado para tu usado como parte de pago del plan.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">¿Puedo cambiar de modelo?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Sí, podés solicitar un cambio de modelo al momento de la adjudicación, por otro vehículo que comercialice Volkswagen, de acuerdo a las disponibilidades y abonando la diferencia si corresponde.</p></div></div>
+        </div>
+    </section>
+
+    <section class="section cta-section" id="contacto">
+        <div class="cta-content">
+            <h2>¿Listo para tu Volkswagen 0km?</h2>
+            <p>Nuestros asesores están disponibles para ayudarte a elegir el plan ideal.</p>
+            <div class="cta-buttons">
+                <a href="${waLink('Hola! Quiero info sobre planes de ahorro VW')}" target="_blank" class="btn btn-wa" style="background:#fff;color:#25D366;">💬 Escribinos por WhatsApp</a>
+                <a href="tel:08101122572" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);">📞 Llamanos: ${cfg.phone}</a>
+            </div>
+            <div class="cta-info">
+                <div class="cta-info-item"><div class="cta-info-icon">📍</div><span>${sucursales[0]?.address || 'CABA'}</span></div>
+                <div class="cta-info-item"><div class="cta-info-icon">🕐</div><span>Lunes a Viernes 9 a 18hs</span></div>
+                <div class="cta-info-item"><div class="cta-info-icon">📱</div><span>+54 9 11 2165-5405</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section sucursales-section" id="sucursales">
+        <div class="section-header">
+            <span class="section-tag">Nuestras Sucursales</span>
+            <h2 class="section-title">Visitanos</h2>
+            <p class="section-subtitle">Encontranos en nuestras sucursales de Buenos Aires</p>
+        </div>
+        <div class="sucursales-grid">
+${sucursalCards}
+        </div>
+        <div class="sucursales-maps">
+${sucursalMaps}
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="logo" style="margin-bottom:0.5rem">
+                    ${cfg.logoUrl ? `<img src="${cfg.logoUrl}" alt="${cfg.dealerName}" style="height:36px;border-radius:4px;">` : `<div class="logo-vw" style="width:40px;height:40px;font-size:0.6rem">${cfg.logoText || 'VW'}</div>`}
+                    <div class="logo-text">
+                        <span class="logo-alra" style="font-size:1.1rem">${cfg.dealerName}</span>
+                        <span class="logo-planes">${cfg.dealerSub}</span>
+                    </div>
+                </a>
+                <p>Concesionario Oficial Volkswagen. Más de 42 años acompañándote en la compra de tu 0km.</p>
+            </div>
+            <div class="footer-links-group">
+                <h4>Institucional</h4>
+                <a href="https://www.alravw.com" target="_blank">Sitio Oficial ALRA</a>
+                <a href="https://www.volkswagen.com.ar" target="_blank">Volkswagen Argentina</a>
+                <a href="https://www.autoahorro.com.ar" target="_blank">Autoahorro VW</a>
+                <a href="https://www.alravw.com/contacto/" target="_blank">Contacto</a>
+            </div>
+            <div class="footer-links-group">
+                <h4>Servicios</h4>
+                <a href="https://www.alravw.com/postventa" target="_blank">Postventa</a>
+                <a href="https://www.alravw.com/sucursales/" target="_blank">Sucursales</a>
+                <a href="https://www.alravw.com/virtual" target="_blank">Concesionario Virtual</a>
+            </div>
+            <div class="footer-links-group">
+                <h4>Redes Sociales</h4>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/vwalra" target="_blank">f</a>
+                    <a href="https://www.instagram.com/alravw/" target="_blank">ig</a>
+                    <a href="https://www.linkedin.com/company/alra-vw/" target="_blank">in</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-legal">
+                Fotos no contractuales. Las imágenes publicadas son de carácter ilustrativo. Consulte equipamientos y especificaciones técnicas en nuestra Red de Concesionarios Oficiales. 
+                Plan de ahorro previo por grupo cerrado aprobado por Resoluciones Nros. 804/98 y 788/04 de la Inspección General de Justicia de la Nación. 
+                Los importes de las cuotas incluyen alícuota, cargos administrativos, seguro de vida, diferimiento y recupero de alícuota, impuestos y derecho de admisión. No incluyen impuesto de sellos, patentamiento, prenda ni seguro del bien.
+                Sede social administradora: Maipú 267 piso 11, CABA. 
+                El titular de los datos personales tiene la facultad de ejercer el derecho de acceso a los mismos conforme Ley N° 25.326.
+            </p>
+            <p class="footer-copy">© 2026 ${cfg.dealerName} Planes · Concesionario Oficial Volkswagen · ${sucursales[0]?.address || 'Buenos Aires'}</p>
+        </div>
+    </footer>
+
+    <a href="${waLink('Hola! Quiero info sobre planes de ahorro VW')}" target="_blank" class="wa-float">💬</a>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-overlay" id="galleryOverlay">
+        <div class="gallery-header">
+            <div>
+                <div class="gallery-title" id="galleryTitle"></div>
+                <div class="gallery-subtitle" id="gallerySubtitle"></div>
+            </div>
+            <button class="gallery-close" onclick="closeGallery()">✕</button>
+        </div>
+        <div class="gallery-main">
+            <button class="gallery-nav gallery-prev" onclick="galleryNav(-1)">‹</button>
+            <img id="galleryImg" src="" alt="">
+            <button class="gallery-nav gallery-next" onclick="galleryNav(1)">›</button>
+        </div>
+        <div class="gallery-counter" id="galleryCounter"></div>
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <script>
+        // Gallery data
+        const galleryData = ${JSON.stringify(galleryData)};
+        let currentModel = 0;
+        let currentPhoto = 0;
+
+        function openGallery(modelIdx) {
+            currentModel = modelIdx;
+            currentPhoto = 0;
+            const m = galleryData[modelIdx];
+            if (!m || !m.images.length) return;
+            document.getElementById('galleryTitle').textContent = m.name;
+            document.getElementById('gallerySubtitle').textContent = m.version;
+            updateGalleryPhoto();
+            renderThumbs();
+            document.getElementById('galleryOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function galleryNav(dir) {
+            const m = galleryData[currentModel];
+            currentPhoto = (currentPhoto + dir + m.images.length) % m.images.length;
+            updateGalleryPhoto();
+            updateActiveThumbs();
+        }
+
+        function goToPhoto(idx) {
+            currentPhoto = idx;
+            updateGalleryPhoto();
+            updateActiveThumbs();
+        }
+
+        function updateGalleryPhoto() {
+            const m = galleryData[currentModel];
+            const img = document.getElementById('galleryImg');
+            img.style.opacity = '0';
+            setTimeout(() => { img.src = m.images[currentPhoto]; img.style.opacity = '1'; }, 150);
+            document.getElementById('galleryCounter').textContent = (currentPhoto + 1) + ' / ' + m.images.length;
+        }
+
+        function renderThumbs() {
+            const m = galleryData[currentModel];
+            document.getElementById('galleryThumbs').innerHTML = m.images.map((src, i) =>
+                '<div class="gallery-thumb ' + (i === 0 ? 'active' : '') + '" onclick="goToPhoto(' + i + ')"><img src="' + src + '"></div>'
+            ).join('');
+        }
+
+        function updateActiveThumbs() {
+            document.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === currentPhoto);
+            });
+        }
+
+        // Close on ESC / overlay click
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGallery(); if (e.key === 'ArrowRight') galleryNav(1); if (e.key === 'ArrowLeft') galleryNav(-1); });
+        document.getElementById('galleryOverlay').addEventListener('click', e => { if (e.target.id === 'galleryOverlay') closeGallery(); });
+
+        // Rest of landing JS
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('active'); }); });
+        function toggleFaq(btn) { const item = btn.parentElement; const wasActive = item.classList.contains('active'); document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active')); if (!wasActive) item.classList.add('active'); }
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.plan-card, .benefit-card, .step-card, .sucursal-card, .map-container').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'opacity 0.6s ease, transform 0.6s ease'; observer.observe(el); });
+    <\/script>
+</body>
+</html>`;
+}
+
+// ════════════════════════════════════════
+// PREVIEW & DOWNLOAD
+// ════════════════════════════════════════
+function previewLanding() {
+    switchTab('preview');
+    document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('active');
+        if (t.textContent.includes('Preview')) t.classList.add('active');
+    });
+}
+
+function refreshPreview() {
+    const html = generateLandingHTML();
+    document.getElementById('previewFrame').srcdoc = html;
+}
+
+function downloadLanding() {
+    saveConfig();
+    const html = generateLandingHTML();
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'index.html';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📥 Landing descargada como index.html');
+}
+
+// Init on load
+init();
+</script>
+
+</body>
+</html>
